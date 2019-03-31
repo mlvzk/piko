@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 
 	shovel "github.com/mlvzk/shovel-go/services"
 )
@@ -39,8 +40,19 @@ func main() {
 			if err != nil {
 				log.Printf("Error copying from source to file: %v, item: %+v", err, item)
 			}
+
+			file.Close()
+			reader.Close()
 		}
 
 		fmt.Printf("items: %+v\n", items)
 	}
+}
+
+func format(formatter string, meta map[string]string) string {
+	for key, value := range meta {
+		formatter = strings.ReplaceAll(formatter, fmt.Sprintf("%%[%s]", key), value)
+	}
+
+	return formatter
 }

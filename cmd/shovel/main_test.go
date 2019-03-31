@@ -1,0 +1,10 @@
+package main
+
+import "testing"
+
+func TestFormat(t *testing.T) {
+	result := format("ab%[id]c%[name]d%[id]", map[string]string{"id": "123", "name": "test"})
+	if result != "ab123ctestd123" {
+		t.Errorf("Format error, got: %s, expected: %s\n", result, "ab123ctestd123")
+	}
+}

@@ -12,5 +12,5 @@ type Item struct {
 type Service interface {
 	IsValidTarget(target string) bool
 	FetchItems(target string) ([]Item, error)
-	Download(meta, options map[string]string) (io.Reader, error)
+	Download(meta, options map[string]string) (io.ReadCloser, error)
 }

@@ -58,7 +58,7 @@ func (s ImgurService) FetchItems(target string) ([]Item, error) {
 	return items, nil
 }
 
-func (s ImgurService) Download(meta, options map[string]string) (io.Reader, error) {
+func (s ImgurService) Download(meta, options map[string]string) (io.ReadCloser, error) {
 	resp, err := http.Get(fmt.Sprintf("https://i.imgur.com/%s.%s", meta["id"], meta["ext"]))
 	if err != nil {
 		return nil, err
