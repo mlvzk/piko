@@ -9,8 +9,13 @@ type Item struct {
 	DefaultOptions   map[string]string
 }
 
+type ServiceIterator interface {
+	Next() ([]Item, error)
+	HasEnded() bool
+}
+
 type Service interface {
 	IsValidTarget(target string) bool
-	FetchItems(target string) ([]Item, error)
+	FetchItems(target string) ServiceIterator
 	Download(meta, options map[string]string) (io.ReadCloser, error)
 }

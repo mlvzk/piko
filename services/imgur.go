@@ -9,20 +9,44 @@ import (
 	"github.com/PuerkitoBio/goquery"
 )
 
-type ImgurService struct{}
+type Imgur struct{}
+type ImgurIterator struct {
+	url  string
+	page int
+	end  bool
+}
 
-func (s ImgurService) IsValidTarget(target string) bool {
+func (s Imgur) IsValidTarget(target string) bool {
 	return strings.Contains(target, "imgur.com/")
 }
 
-func (s ImgurService) FetchItems(target string) ([]Item, error) {
-	resp, err := http.Get(target)
+func (s Imgur) FetchItems(target string) ServiceIterator {
+	return &ImgurIterator{
+		url:  target,
+		page: 1,
+		end:  false,
+	}
+}
+
+func (s Imgur) Download(meta, options map[string]string) (io.ReadCloser, error) {
+	resp, err := http.Get(fmt.Sprintf("https://i.imgur.com/%s.%s", meta["id"], meta["ext"]))
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Body, nil
+}
+
+func (i *ImgurIterator) Next() ([]Item, error) {
+	i.end = true
+
+	resp, err := http.Get(i.url)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("GET %v returned a wrong status code - %v", target, resp.StatusCode)
+		return nil, fmt.Errorf("GET %v returned a wrong status code - %v", i.url, resp.StatusCode)
 	}
 
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
@@ -34,9 +58,9 @@ func (s ImgurService) FetchItems(target string) ([]Item, error) {
 	println("albumTitle: ", albumTitle)
 
 	items := []Item{}
-	doc.Find("div.post-images div.post-image-container").Each(func(_ int, s *goquery.Selection) {
-		itemType, itExists := s.Attr("itemtype")
-		id, _ := s.Attr("id")
+	doc.Find("div.post-images div.post-image-container").Each(func(_ int, sel *goquery.Selection) {
+		itemType, itExists := sel.Attr("itemtype")
+		id, _ := sel.Attr("id")
 
 		ext := "png"
 		if itExists && strings.Contains(itemType, "VideoObject") {
@@ -58,11 +82,6 @@ func (s ImgurService) FetchItems(target string) ([]Item, error) {
 	return items, nil
 }
 
-func (s ImgurService) Download(meta, options map[string]string) (io.ReadCloser, error) {
-	resp, err := http.Get(fmt.Sprintf("https://i.imgur.com/%s.%s", meta["id"], meta["ext"]))
-	if err != nil {
-		return nil, err
-	}
-
-	return resp.Body, nil
+func (i ImgurIterator) HasEnded() bool {
+	return i.end
 }

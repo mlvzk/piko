@@ -11,41 +11,46 @@ import (
 )
 
 func main() {
-	services := []shovel.Service{shovel.ImgurService{}}
+	services := []shovel.Service{shovel.Imgur{}, shovel.Fourchan{}}
 
+	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
 	target := "https://imgur.com/t/article13/EfY6CxU"
 	for _, service := range services {
 		if !service.IsValidTarget(target) {
-			break
+			continue
 		}
 
 		fmt.Printf("Found valid service: %+v\n", service)
-		items, err := service.FetchItems(target)
-		if err != nil {
-			log.Fatalln("Error: ", err)
+		iterator := service.FetchItems(target)
+
+		for !iterator.HasEnded() {
+			items, err := iterator.Next()
+			if err != nil {
+				log.Printf("Iteration error: %v; target: %v", err, target)
+				break
+			}
+			fmt.Printf("items: %+v\n", items)
+
+			for _, item := range items {
+				reader, err := service.Download(item.Meta, nil)
+				if err != nil {
+					log.Printf("Download error: %v, item: %+v\n", err, item)
+				}
+
+				file, err := os.Create("downloads/" + item.DefaultName)
+				if err != nil {
+					log.Printf("Error creating file: %v, name: %v\n", err, item.DefaultName)
+				}
+
+				_, err = io.Copy(file, reader)
+				if err != nil {
+					log.Printf("Error copying from source to file: %v, item: %+v", err, item)
+				}
+
+				file.Close()
+				reader.Close()
+			}
 		}
-
-		for _, item := range items {
-			reader, err := service.Download(item.Meta, nil)
-			if err != nil {
-				log.Printf("Download error: %v, item: %+v\n", err, item)
-			}
-
-			file, err := os.Create(item.DefaultName)
-			if err != nil {
-				log.Printf("Error creating file: %v, name: %v\n", err, item.DefaultName)
-			}
-
-			_, err = io.Copy(file, reader)
-			if err != nil {
-				log.Printf("Error copying from source to file: %v, item: %+v", err, item)
-			}
-
-			file.Close()
-			reader.Close()
-		}
-
-		fmt.Printf("items: %+v\n", items)
 	}
 }
 
