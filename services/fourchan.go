@@ -29,7 +29,12 @@ func (s Fourchan) FetchItems(target string) ServiceIterator {
 }
 
 func (s Fourchan) Download(meta, options map[string]string) (io.ReadCloser, error) {
-	resp, err := http.Get(meta["imgURL"])
+	url := meta["imgURL"]
+	if options["thumbnail"] == "yes" {
+		url = meta["thumbnailURL"]
+	}
+
+	resp, err := http.Get(url)
 	if err != nil {
 		return nil, err
 	}
@@ -64,18 +69,39 @@ func (i *FourchanIterator) Next() ([]Item, error) {
 			imgURL = "https:" + imgURL
 		}
 
+		thumbnailURL, _ := sel.Find("a.fileThumb img").Attr("src")
+		if thumbnailURL[0] == '/' {
+			thumbnailURL = "https:" + thumbnailURL
+		}
+
 		titleSel := sel.Find("div.fileText a")
 		title, titleExists := titleSel.Attr("title")
 		if !titleExists || strings.TrimSpace(title) == "" {
 			title = titleSel.Text()
 		}
 
+		dotParts := strings.Split(imgURL, ".")
+		ext := dotParts[len(dotParts)-1]
+
+		slashParts := strings.Split(imgURL, "/")
+		lastSlashDotParts := strings.Split(slashParts[len(slashParts)-1], ".")
+		id := lastSlashDotParts[0]
+
 		items = append(items, Item{
 			Meta: map[string]string{
-				"title":  title,
-				"imgURL": imgURL,
+				"title":        title,
+				"imgURL":       imgURL,
+				"id":           id,
+				"ext":          ext,
+				"thumbnailURL": thumbnailURL,
 			},
 			DefaultName: title,
+			AvailableOptions: map[string][]string{
+				"thumbnail": []string{"yes", "no"},
+			},
+			DefaultOptions: map[string]string{
+				"thumbnail": "no",
+			},
 		})
 	})
 

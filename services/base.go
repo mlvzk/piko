@@ -5,7 +5,7 @@ import "io"
 type Item struct {
 	Meta             map[string]string
 	DefaultName      string
-	AvailableOptions map[string](map[string]string)
+	AvailableOptions map[string]([]string)
 	DefaultOptions   map[string]string
 }
 
