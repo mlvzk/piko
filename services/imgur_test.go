@@ -2,7 +2,7 @@ package shovel
 
 import "testing"
 
-func TestIsValidTarget(t *testing.T) {
+func TestImgurIsValidTarget(t *testing.T) {
 	tests := map[string]bool{
 		"https://imgur.com/gallery/kgIfZrm":     true,
 		"imgur.com/gallery/kgIfZrm":             true,
