@@ -5,7 +5,7 @@ import (
 	"io"
 	"log"
 	"os"
-	"strings"
+	"regexp"
 
 	shovel "github.com/mlvzk/shovel-go/services"
 )
@@ -32,7 +32,7 @@ func main() {
 			fmt.Printf("items: %+v\n", items)
 
 			for _, item := range items {
-				reader, err := service.Download(item.Meta, nil)
+				reader, err := service.Download(item.Meta, item.DefaultOptions)
 				if err != nil {
 					log.Printf("Download error: %v, item: %+v\n", err, item)
 				}
@@ -55,9 +55,17 @@ func main() {
 }
 
 func format(formatter string, meta map[string]string) string {
-	for key, value := range meta {
-		formatter = strings.ReplaceAll(formatter, fmt.Sprintf("%%[%s]", key), value)
-	}
+	re := regexp.MustCompile(`%\[[[:alnum:]]*\]`)
 
-	return formatter
+	return re.ReplaceAllStringFunc(formatter, func(str string) string {
+		fmt.Println("match: ", str)
+		key := str[2 : len(str)-1]
+
+		v, ok := meta[key]
+		if !ok {
+			return key
+		}
+
+		return v
+	})
 }
