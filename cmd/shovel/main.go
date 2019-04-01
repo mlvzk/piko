@@ -1,20 +1,30 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"log"
 	"os"
 	"regexp"
+	"strings"
 
 	shovel "github.com/mlvzk/shovel-go/services"
 )
 
 func main() {
+	var formatStr string
+	var optionsStr string
+	flag.StringVar(&formatStr, "format", "", "File name format, ex: -format %[id].%[ext]")
+	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
+	flag.Parse()
+
+	userOptions := parseOptions(optionsStr)
+
 	services := []shovel.Service{shovel.Imgur{}, shovel.Fourchan{}}
 
-	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
-	target := "https://imgur.com/t/article13/EfY6CxU"
+	target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
+	// target := "https://imgur.com/t/article13/EfY6CxU"
 	for _, service := range services {
 		if !service.IsValidTarget(target) {
 			continue
@@ -32,14 +42,21 @@ func main() {
 			fmt.Printf("items: %+v\n", items)
 
 			for _, item := range items {
-				reader, err := service.Download(item.Meta, item.DefaultOptions)
+				name := item.DefaultName
+				if formatStr != "" {
+					name = format(formatStr, item.Meta)
+				}
+
+				options := mergeStringMaps(item.DefaultOptions, userOptions)
+
+				reader, err := service.Download(item.Meta, options)
 				if err != nil {
 					log.Printf("Download error: %v, item: %+v\n", err, item)
 				}
 
-				file, err := os.Create("downloads/" + item.DefaultName)
+				file, err := os.Create("downloads/" + name)
 				if err != nil {
-					log.Printf("Error creating file: %v, name: %v\n", err, item.DefaultName)
+					log.Printf("Error creating file: %v, name: %v\n", err, name)
 				}
 
 				_, err = io.Copy(file, reader)
@@ -54,11 +71,10 @@ func main() {
 	}
 }
 
-func format(formatter string, meta map[string]string) string {
-	re := regexp.MustCompile(`%\[[[:alnum:]]*\]`)
+var formatRegexp = regexp.MustCompile(`%\[[[:alnum:]]*\]`)
 
-	return re.ReplaceAllStringFunc(formatter, func(str string) string {
-		fmt.Println("match: ", str)
+func format(formatter string, meta map[string]string) string {
+	return formatRegexp.ReplaceAllStringFunc(formatter, func(str string) string {
 		key := str[2 : len(str)-1]
 
 		v, ok := meta[key]
@@ -68,4 +84,35 @@ func format(formatter string, meta map[string]string) string {
 
 		return v
 	})
+}
+
+func parseOptions(optionsStr string) map[string]string {
+	options := map[string]string{}
+
+	declarations := strings.Split(optionsStr, ",")
+	for _, declaration := range declarations {
+		if declaration == "" {
+			continue
+		}
+
+		keyValue := strings.Split(declaration, "=")
+		key, value := keyValue[0], keyValue[1]
+
+		options[key] = value
+	}
+
+	return options
+}
+
+// order of args matters
+func mergeStringMaps(maps ...map[string]string) map[string]string {
+	merged := map[string]string{}
+
+	for _, m := range maps {
+		for k, v := range m {
+			merged[k] = v
+		}
+	}
+
+	return merged
 }
