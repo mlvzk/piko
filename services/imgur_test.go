@@ -12,7 +12,7 @@ func TestImgurIsValidTarget(t *testing.T) {
 
 	for target, expected := range tests {
 		if (Imgur{}).IsValidTarget(target) != expected {
-			t.Errorf("Invalid result, expected: %v", expected)
+			t.Errorf("Invalid result, target: %v, expected: %v", target, expected)
 		}
 	}
 }

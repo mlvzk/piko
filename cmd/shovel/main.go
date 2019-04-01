@@ -15,16 +15,17 @@ import (
 func main() {
 	var formatStr string
 	var optionsStr string
-	flag.StringVar(&formatStr, "format", "", "File name format, ex: -format %[id].%[ext]")
+	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]")
 	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
 	flag.Parse()
 
 	userOptions := parseOptions(optionsStr)
 
-	services := []shovel.Service{shovel.Imgur{}, shovel.Fourchan{}}
+	services := []shovel.Service{shovel.Imgur{}, shovel.Fourchan{}, shovel.Youtube{}}
 
-	target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
+	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
 	// target := "https://imgur.com/t/article13/EfY6CxU"
+	target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
 	for _, service := range services {
 		if !service.IsValidTarget(target) {
 			continue
@@ -52,16 +53,22 @@ func main() {
 				reader, err := service.Download(item.Meta, options)
 				if err != nil {
 					log.Printf("Download error: %v, item: %+v\n", err, item)
+					continue
 				}
 
 				file, err := os.Create("downloads/" + name)
 				if err != nil {
 					log.Printf("Error creating file: %v, name: %v\n", err, name)
+					reader.Close()
+					continue
 				}
 
 				_, err = io.Copy(file, reader)
 				if err != nil {
 					log.Printf("Error copying from source to file: %v, item: %+v", err, item)
+					reader.Close()
+					file.Close()
+					continue
 				}
 
 				file.Close()
