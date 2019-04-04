@@ -5,9 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
+	"os/exec"
 	"regexp"
-	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -28,7 +29,8 @@ type youtubeConfig struct {
 
 type playerResponse struct {
 	StreamingData struct {
-		AdaptiveFormats []adaptiveFormat `json:"adaptiveFormats"`
+		AdaptiveFormats []format `json:"adaptiveFormats"`
+		Formats         []format `json:"formats"`
 	} `json:"streamingData"`
 	VideoDetails struct {
 		Title  string `json:"title"`
@@ -36,11 +38,12 @@ type playerResponse struct {
 	} `json:"videoDetails"`
 }
 
-type adaptiveFormat struct {
+type format struct {
 	URL           string `json:"url"`
 	ITag          int    `json:"itag"`
 	MimeType      string `json:"mimeType"`
-	ContentLength int    `json:"contentLength"`
+	ContentLength string `json:"contentLength"`
+	Bitrate       int    `json:"bitrate"`
 }
 
 func (s Youtube) IsValidTarget(target string) bool {
@@ -58,24 +61,57 @@ func (s Youtube) Download(meta, options map[string]string) (io.ReadCloser, error
 	ytPlayerResponse := playerResponse{}
 	json.Unmarshal([]byte(meta["_playerResponse"]), &ytPlayerResponse)
 
-	selectedFormat, found := adaptiveFormat{}, false
-	for _, format := range ytPlayerResponse.StreamingData.AdaptiveFormats {
-		if options["itag"] == strconv.Itoa(format.ITag) {
-			selectedFormat, found = format, true
-			break
+	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" {
+		// no ffmpeg, fallbacking to format with both audio and video
+		video := findBestVideo(ytPlayerResponse.StreamingData.Formats)
+		videoResp, err := http.Get(video.URL)
+		if err != nil {
+			return nil, err
 		}
+		videoStream := videoResp.Body
+
+		mimeParts := strings.Split(video.MimeType, ";")
+		ext := strings.Split(mimeParts[0], "/")[1]
+		// this is bad, in order for this to work file name needs to be formatted after Download is called
+		meta["ext"] = ext
+
+		return videoStream, nil
 	}
 
-	if !found {
-		return nil, errors.New("Couldn't find a format with given itag")
-	}
+	audio := findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	video := findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
 
-	resp, err := http.Get(selectedFormat.URL)
+	audioResp, err := http.Get(audio.URL)
+	if err != nil {
+		return nil, err
+	}
+	audioStream := audioResp.Body
+
+	videoResp, err := http.Get(video.URL)
+	if err != nil {
+		return nil, err
+	}
+	videoStream := videoResp.Body
+
+	// MimeType should be: audio/webm; codecs="opus"
+	mimeParts := strings.Split(audio.MimeType, ";")
+	ext := strings.Split(mimeParts[0], "/")[1]
+
+	tmpAudioFile, err := ioutil.TempFile("", "audio*."+ext)
+	io.Copy(tmpAudioFile, audioStream)
+	tmpAudioFile.Close()
+	audioStream.Close()
+
+	cmd := exec.Command("ffmpeg", "-i", tmpAudioFile.Name(), "-i", "-", "-c", "copy", "-f", "matroska", "-")
+	cmd.Stdin = videoStream
+	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return nil, err
 	}
 
-	return resp.Body, nil
+	go cmd.Run()
+
+	return stdout, nil
 }
 
 var ytConfigRegexp = regexp.MustCompile(`ytplayer\.config = (.*?);ytplayer\.load = function()`)
@@ -110,26 +146,22 @@ func (i *YoutubeIterator) Next() ([]Item, error) {
 	ytPlayer := playerResponse{}
 	json.Unmarshal([]byte(ytConfig.Args.PlayerResponseStr), &ytPlayer)
 
-	fmt.Println(ytConfig.Args.PlayerResponseStr)
-	// fmt.Printf("ytPlayer: %+v\n", ytPlayer)
-
 	item := Item{
 		Meta: map[string]string{
 			"title":           ytPlayer.VideoDetails.Title,
 			"author":          ytPlayer.VideoDetails.Author,
+			"ext":             "mkv",
 			"_playerResponse": ytConfig.Args.PlayerResponseStr,
 		},
-		DefaultName: ytPlayer.VideoDetails.Title + ".mp4",
+		DefaultName: "%[title].%[ext]",
 		AvailableOptions: map[string]([]string){
-			"itag": make([]string, len(ytPlayer.StreamingData.AdaptiveFormats)),
+			"quality":   []string{"best", "medium", "worst"},
+			"useFfmpeg": []string{"yes", "no"},
 		},
 		DefaultOptions: map[string]string{
-			"itag": strconv.Itoa(ytPlayer.StreamingData.AdaptiveFormats[0].ITag),
+			"quality":   "best",
+			"useFfmpeg": "yes",
 		},
-	}
-
-	for i, format := range ytPlayer.StreamingData.AdaptiveFormats {
-		item.AvailableOptions["itag"][i] = strconv.Itoa(format.ITag)
 	}
 
 	return []Item{item}, nil
@@ -137,4 +169,28 @@ func (i *YoutubeIterator) Next() ([]Item, error) {
 
 func (i YoutubeIterator) HasEnded() bool {
 	return i.end
+}
+
+func findBest(formats []format, t string) format {
+	var best format
+
+	for _, f := range formats {
+		if !strings.Contains(f.MimeType, t) {
+			continue
+		}
+
+		if f.Bitrate > best.Bitrate {
+			best = f
+		}
+	}
+
+	return best
+}
+
+func findBestAudio(formats []format) format {
+	return findBest(formats, "audio")
+}
+
+func findBestVideo(formats []format) format {
+	return findBest(formats, "video")
 }
