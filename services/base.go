@@ -17,5 +17,5 @@ type ServiceIterator interface {
 type Service interface {
 	IsValidTarget(target string) bool
 	FetchItems(target string) ServiceIterator
-	Download(meta, options map[string]string) (io.ReadCloser, error)
+	Download(meta, options map[string]string) (io.Reader, error)
 }

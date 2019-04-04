@@ -57,7 +57,7 @@ func (s Youtube) FetchItems(target string) ServiceIterator {
 	}
 }
 
-func (s Youtube) Download(meta, options map[string]string) (io.ReadCloser, error) {
+func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	ytPlayerResponse := playerResponse{}
 	json.Unmarshal([]byte(meta["_playerResponse"]), &ytPlayerResponse)
 

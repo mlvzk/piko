@@ -28,7 +28,7 @@ func (s Fourchan) FetchItems(target string) ServiceIterator {
 	}
 }
 
-func (s Fourchan) Download(meta, options map[string]string) (io.ReadCloser, error) {
+func (s Fourchan) Download(meta, options map[string]string) (io.Reader, error) {
 	url := meta["imgURL"]
 	if options["thumbnail"] == "yes" {
 		url = meta["thumbnailURL"]

@@ -59,20 +59,20 @@ func main() {
 				file, err := os.Create("downloads/" + name)
 				if err != nil {
 					log.Printf("Error creating file: %v, name: %v\n", err, name)
-					reader.Close()
+					tryClose(reader)
 					continue
 				}
 
 				_, err = io.Copy(file, reader)
 				if err != nil {
 					log.Printf("Error copying from source to file: %v, item: %+v", err, item)
-					reader.Close()
+					tryClose(reader)
 					file.Close()
 					continue
 				}
 
 				file.Close()
-				reader.Close()
+				tryClose(reader)
 			}
 		}
 	}
@@ -122,4 +122,12 @@ func mergeStringMaps(maps ...map[string]string) map[string]string {
 	}
 
 	return merged
+}
+
+func tryClose(reader io.Reader) error {
+	if closer, ok := reader.(io.ReadCloser); ok {
+		return closer.Close()
+	}
+
+	return nil
 }
