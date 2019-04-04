@@ -40,14 +40,8 @@ func main() {
 				log.Printf("Iteration error: %v; target: %v", err, target)
 				break
 			}
-			fmt.Printf("items: %+v\n", items)
 
 			for _, item := range items {
-				name := item.DefaultName
-				if formatStr != "" {
-					name = format(formatStr, item.Meta)
-				}
-
 				options := mergeStringMaps(item.DefaultOptions, userOptions)
 
 				reader, err := service.Download(item.Meta, options)
@@ -55,6 +49,12 @@ func main() {
 					log.Printf("Download error: %v, item: %+v\n", err, item)
 					continue
 				}
+
+				nameFormat := item.DefaultName
+				if formatStr != "" {
+					nameFormat = formatStr
+				}
+				name := format(nameFormat, item.Meta)
 
 				file, err := os.Create("downloads/" + name)
 				if err != nil {

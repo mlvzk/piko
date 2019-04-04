@@ -95,7 +95,7 @@ func (i *FourchanIterator) Next() ([]Item, error) {
 				"ext":          ext,
 				"thumbnailURL": thumbnailURL,
 			},
-			DefaultName: title,
+			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{
 				"thumbnail": []string{"yes", "no"},
 			},

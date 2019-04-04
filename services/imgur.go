@@ -75,7 +75,7 @@ func (i *ImgurIterator) Next() ([]Item, error) {
 				"itemType":   itemType,
 				"albumTitle": albumTitle,
 			},
-			DefaultName: id + "." + ext,
+			DefaultName: "%[id].%[ext]",
 		})
 	})
 
