@@ -63,7 +63,7 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 
 	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" {
 		// no ffmpeg, fallbacking to format with both audio and video
-		video := findBestVideo(ytPlayerResponse.StreamingData.Formats)
+		video := s.findBestVideo(ytPlayerResponse.StreamingData.Formats)
 		videoResp, err := http.Get(video.URL)
 		if err != nil {
 			return nil, err
@@ -78,8 +78,8 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		return videoStream, nil
 	}
 
-	audio := findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
-	video := findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	audio := s.findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	video := s.findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
 
 	audioResp, err := http.Get(audio.URL)
 	if err != nil {
@@ -171,7 +171,7 @@ func (i YoutubeIterator) HasEnded() bool {
 	return i.end
 }
 
-func findBest(formats []format, t string) format {
+func (_ Youtube) findBest(formats []format, t string) format {
 	var best format
 
 	for _, f := range formats {
@@ -187,10 +187,10 @@ func findBest(formats []format, t string) format {
 	return best
 }
 
-func findBestAudio(formats []format) format {
-	return findBest(formats, "audio")
+func (yt Youtube) findBestAudio(formats []format) format {
+	return yt.findBest(formats, "audio")
 }
 
-func findBestVideo(formats []format) format {
-	return findBest(formats, "video")
+func (yt Youtube) findBestVideo(formats []format) format {
+	return yt.findBest(formats, "video")
 }
