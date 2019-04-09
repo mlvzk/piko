@@ -99,6 +99,6 @@ func TestIteratorNext(t *testing.T) {
 	}
 
 	if diff := pretty.Compare(items, expected); diff != "" {
-		t.Errorf("%s diff: %s", t.Name(), diff)
+		t.Errorf("%s diff:\n%s", t.Name(), diff)
 	}
 }
