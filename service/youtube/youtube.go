@@ -1,4 +1,4 @@
-package shovel
+package youtube
 
 import (
 	"encoding/json"
@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/mlvzk/shovel-go/service"
 )
 
 type Youtube struct{}
@@ -50,7 +51,7 @@ func (s Youtube) IsValidTarget(target string) bool {
 	return strings.Contains(target, "youtube.com/") || strings.Contains(target, "youtu.be/")
 }
 
-func (s Youtube) FetchItems(target string) ServiceIterator {
+func (s Youtube) FetchItems(target string) service.ServiceIterator {
 	return &YoutubeIterator{
 		url: target,
 		end: false,
@@ -63,7 +64,7 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 
 	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" {
 		// no ffmpeg, fallbacking to format with both audio and video
-		video := s.findBestVideo(ytPlayerResponse.StreamingData.Formats)
+		video := findBestVideo(ytPlayerResponse.StreamingData.Formats)
 		videoResp, err := http.Get(video.URL)
 		if err != nil {
 			return nil, err
@@ -78,8 +79,8 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		return videoStream, nil
 	}
 
-	audio := s.findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
-	video := s.findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	audio := findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	video := findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
 
 	audioResp, err := http.Get(audio.URL)
 	if err != nil {
@@ -116,7 +117,7 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 
 var ytConfigRegexp = regexp.MustCompile(`ytplayer\.config = (.*?);ytplayer\.load = function()`)
 
-func (i *YoutubeIterator) Next() ([]Item, error) {
+func (i *YoutubeIterator) Next() ([]service.Item, error) {
 	i.end = true
 
 	resp, err := http.Get(i.url)
@@ -146,7 +147,7 @@ func (i *YoutubeIterator) Next() ([]Item, error) {
 	ytPlayer := playerResponse{}
 	json.Unmarshal([]byte(ytConfig.Args.PlayerResponseStr), &ytPlayer)
 
-	item := Item{
+	item := service.Item{
 		Meta: map[string]string{
 			"title":           ytPlayer.VideoDetails.Title,
 			"author":          ytPlayer.VideoDetails.Author,
@@ -164,14 +165,14 @@ func (i *YoutubeIterator) Next() ([]Item, error) {
 		},
 	}
 
-	return []Item{item}, nil
+	return []service.Item{item}, nil
 }
 
 func (i YoutubeIterator) HasEnded() bool {
 	return i.end
 }
 
-func (_ Youtube) findBest(formats []format, t string) format {
+func findBest(formats []format, t string) format {
 	var best format
 
 	for _, f := range formats {
@@ -187,10 +188,10 @@ func (_ Youtube) findBest(formats []format, t string) format {
 	return best
 }
 
-func (yt Youtube) findBestAudio(formats []format) format {
-	return yt.findBest(formats, "audio")
+func findBestAudio(formats []format) format {
+	return findBest(formats, "audio")
 }
 
-func (yt Youtube) findBestVideo(formats []format) format {
-	return yt.findBest(formats, "video")
+func findBestVideo(formats []format) format {
+	return findBest(formats, "video")
 }

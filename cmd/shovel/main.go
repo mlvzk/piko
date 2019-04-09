@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	shovel "github.com/mlvzk/shovel-go/services"
+	"github.com/mlvzk/shovel-go"
 )
 
 func main() {
@@ -21,11 +21,12 @@ func main() {
 
 	userOptions := parseOptions(optionsStr)
 
-	services := []shovel.Service{shovel.Imgur{}, shovel.Fourchan{}, shovel.Youtube{}}
+	services := shovel.GetAllServices()
 
 	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
 	// target := "https://imgur.com/t/article13/EfY6CxU"
-	target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
+	// target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
+	target := "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	for _, service := range services {
 		if !service.IsValidTarget(target) {
 			continue
@@ -71,6 +72,7 @@ func main() {
 					continue
 				}
 
+				fmt.Println("here2", file.Name())
 				file.Close()
 				tryClose(reader)
 			}
@@ -89,7 +91,7 @@ func format(formatter string, meta map[string]string) string {
 			return key
 		}
 
-		return v
+		return sanitizeFileName(v)
 	})
 }
 
@@ -124,10 +126,19 @@ func mergeStringMaps(maps ...map[string]string) map[string]string {
 	return merged
 }
 
-func tryClose(reader io.Reader) error {
-	if closer, ok := reader.(io.ReadCloser); ok {
+func tryClose(reader interface{}) error {
+	if closer, ok := reader.(io.Closer); ok {
 		return closer.Close()
 	}
 
 	return nil
+}
+
+var seps = regexp.MustCompile(`[\r\n &_=+:]`)
+
+func sanitizeFileName(name string) string {
+	name = strings.TrimSpace(name)
+	name = seps.ReplaceAllString(name, "-")
+
+	return name
 }

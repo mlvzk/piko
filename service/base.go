@@ -1,4 +1,4 @@
-package shovel
+package service
 
 import "io"
 

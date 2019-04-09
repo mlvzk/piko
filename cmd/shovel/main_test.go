@@ -1,6 +1,8 @@
 package main
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestFormat(t *testing.T) {
 	cases := []struct {

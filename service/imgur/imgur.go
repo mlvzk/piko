@@ -1,4 +1,4 @@
-package shovel
+package imgur
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/mlvzk/shovel-go/service"
 )
 
 type Imgur struct{}
@@ -20,7 +21,7 @@ func (s Imgur) IsValidTarget(target string) bool {
 	return strings.Contains(target, "imgur.com/")
 }
 
-func (s Imgur) FetchItems(target string) ServiceIterator {
+func (s Imgur) FetchItems(target string) service.ServiceIterator {
 	return &ImgurIterator{
 		url:  target,
 		page: 1,
@@ -37,7 +38,7 @@ func (s Imgur) Download(meta, options map[string]string) (io.Reader, error) {
 	return resp.Body, nil
 }
 
-func (i *ImgurIterator) Next() ([]Item, error) {
+func (i *ImgurIterator) Next() ([]service.Item, error) {
 	i.end = true
 
 	resp, err := http.Get(i.url)
@@ -55,9 +56,8 @@ func (i *ImgurIterator) Next() ([]Item, error) {
 	}
 
 	albumTitle := doc.Find("div.post-title-container h1").Text()
-	println("albumTitle: ", albumTitle)
 
-	items := []Item{}
+	items := []service.Item{}
 	doc.Find("div.post-images div.post-image-container").Each(func(_ int, sel *goquery.Selection) {
 		itemType, itExists := sel.Attr("itemtype")
 		id, _ := sel.Attr("id")
@@ -68,7 +68,7 @@ func (i *ImgurIterator) Next() ([]Item, error) {
 		}
 
 		// TODO: take src from meta[@contentURL] if available
-		items = append(items, Item{
+		items = append(items, service.Item{
 			Meta: map[string]string{
 				"id":         id,
 				"ext":        ext,

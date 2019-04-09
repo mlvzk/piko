@@ -1,4 +1,4 @@
-package shovel
+package fourchan
 
 import (
 	"fmt"
@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/mlvzk/shovel-go/service"
 )
 
 type Fourchan struct{}
@@ -20,7 +21,7 @@ func (s Fourchan) IsValidTarget(target string) bool {
 	return strings.Contains(target, "4chan.org/") || strings.Contains(target, "4channel.org/")
 }
 
-func (s Fourchan) FetchItems(target string) ServiceIterator {
+func (s Fourchan) FetchItems(target string) service.ServiceIterator {
 	return &FourchanIterator{
 		url:  target,
 		page: 1,
@@ -42,7 +43,7 @@ func (s Fourchan) Download(meta, options map[string]string) (io.Reader, error) {
 	return resp.Body, nil
 }
 
-func (i *FourchanIterator) Next() ([]Item, error) {
+func (i *FourchanIterator) Next() ([]service.Item, error) {
 	i.end = true
 
 	resp, err := http.Get(i.url)
@@ -59,7 +60,7 @@ func (i *FourchanIterator) Next() ([]Item, error) {
 		return nil, err
 	}
 
-	items := []Item{}
+	items := []service.Item{}
 	doc.Find("div.file").Each(func(_ int, sel *goquery.Selection) {
 		imgURL, iuExists := sel.Find("a.fileThumb").Attr("href")
 		if !iuExists {
@@ -87,7 +88,7 @@ func (i *FourchanIterator) Next() ([]Item, error) {
 		lastSlashDotParts := strings.Split(slashParts[len(slashParts)-1], ".")
 		id := lastSlashDotParts[0]
 
-		items = append(items, Item{
+		items = append(items, service.Item{
 			Meta: map[string]string{
 				"title":        title,
 				"imgURL":       imgURL,
