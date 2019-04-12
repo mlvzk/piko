@@ -9,7 +9,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/mlvzk/shovel-go"
+	piko "github.com/mlvzk/piko"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 
 	userOptions := parseOptions(optionsStr)
 
-	services := shovel.GetAllServices()
+	services := piko.GetAllServices()
 
 	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
 	// target := "https://imgur.com/t/article13/EfY6CxU"

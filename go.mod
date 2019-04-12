@@ -1,4 +1,4 @@
-module github.com/mlvzk/shovel-go
+module github.com/mlvzk/piko
 
 go 1.12
 

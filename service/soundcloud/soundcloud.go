@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/mlvzk/shovel-go/service"
+	"github.com/mlvzk/piko/service"
 )
 
 type trackData struct {

@@ -1,12 +1,12 @@
-package shovel
+package piko
 
 import (
-	"github.com/mlvzk/shovel-go/service"
-	"github.com/mlvzk/shovel-go/service/fourchan"
-	"github.com/mlvzk/shovel-go/service/imgur"
-	"github.com/mlvzk/shovel-go/service/instagram"
-	"github.com/mlvzk/shovel-go/service/soundcloud"
-	"github.com/mlvzk/shovel-go/service/youtube"
+	"github.com/mlvzk/piko/service"
+	"github.com/mlvzk/piko/service/fourchan"
+	"github.com/mlvzk/piko/service/imgur"
+	"github.com/mlvzk/piko/service/instagram"
+	"github.com/mlvzk/piko/service/soundcloud"
+	"github.com/mlvzk/piko/service/youtube"
 )
 
 func GetAllServices() []service.Service {

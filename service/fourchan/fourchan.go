@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/mlvzk/shovel-go/service"
+	"github.com/mlvzk/piko/service"
 )
 
 type Fourchan struct{}

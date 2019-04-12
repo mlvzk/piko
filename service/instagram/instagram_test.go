@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/kylelemons/godebug/pretty"
-	"github.com/mlvzk/shovel-go/service"
+	"github.com/mlvzk/piko/service"
 )
 
 const base = "https://www.instagram.com"
