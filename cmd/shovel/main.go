@@ -26,7 +26,8 @@ func main() {
 	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
 	// target := "https://imgur.com/t/article13/EfY6CxU"
 	// target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
-	target := "https://www.instagram.com/p/Bv9MJCsAvZV/"
+	// target := "https://www.instagram.com/p/Bv9MJCsAvZV/"
+	target := "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
 	for _, service := range services {
 		if !service.IsValidTarget(target) {
 			continue
@@ -72,7 +73,6 @@ func main() {
 					continue
 				}
 
-				fmt.Println("here2", file.Name())
 				file.Close()
 				tryClose(reader)
 			}

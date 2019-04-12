@@ -118,8 +118,9 @@ func (i *InstagramIterator) Next() ([]service.Item, error) {
 					"author":  sch.Author.AlternateName[1:],
 					"date":    sch.UploadDate,
 					"id":      id,
+					"ext":     "jpg",
 				},
-				DefaultName: "%[title].jpg",
+				DefaultName: "%[title].%[ext]",
 			},
 		}, nil
 	}

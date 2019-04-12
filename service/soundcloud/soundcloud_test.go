@@ -1,4 +1,4 @@
-package instagram
+package soundcloud
 
 import (
 	"flag"
@@ -7,41 +7,38 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/mlvzk/shovel-go/service"
 )
 
-const base = "https://www.instagram.com"
+const baseApiURL = "https://api.soundcloud.com"
 
 var update = flag.Bool("update", false, "update .golden files")
 
 func TestIsValidTarget(t *testing.T) {
 	tests := map[string]bool{
-		"https://www.instagram.com/explore/tags/cat/": true,
-		"instagram.com/explore/tags/cat/":             true,
-		"https://www.instagram.com/p/Bv3X1rVBWm5/":    true,
-		"https://www.instagram.com/newding2/?hl=en":   true,
-		"https://youtube.com/":                        false,
+		"https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator": true,
+		"https://soundcloud.com/":              true,
+		"https://soundcloud.com/search?q=test": true,
+		"https://soundcloud.com/fadermedia":    true,
+		"https://instagram.com/":               false,
 	}
 
 	for target, expected := range tests {
-		if (Instagram{}).IsValidTarget(target) != expected {
+		if (Soundcloud{}).IsValidTarget(target) != expected {
 			t.Errorf("Invalid result, target: %v, expected: %v", target, expected)
 		}
 	}
 }
 
 func TestIteratorNext(t *testing.T) {
-	path := "/p/BsOGulcndj-/"
-
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		golden := filepath.Join("testdata", t.Name()+"-resp.golden")
 
 		if *update {
-			resp, err := http.Get(base + path)
+			resp, err := http.Get(baseApiURL + r.URL.Path + "?" + r.URL.RawQuery)
 			if err != nil {
 				t.Fatalf("Error updating golden file: %v", err)
 			}
@@ -64,8 +61,10 @@ func TestIteratorNext(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	iterator := InstagramIterator{
-		url: ts.URL + path,
+	iterator := SoundcloudIterator{
+		url:        "https://soundcloud.com/ishaan-bhagwakar/oldie-ofwgkta",
+		baseApiURL: ts.URL,
+		clientID:   "a3e059563d7fd3372b49b37f00a00bcf",
 	}
 
 	items, err := iterator.Next()
@@ -73,27 +72,22 @@ func TestIteratorNext(t *testing.T) {
 		t.Fatalf("iterator.Next() error: %v", err)
 	}
 
-	if len(items) < 1 {
-		t.Fatalf("Items array is empty")
+	for _, item := range items {
+		item.Meta["playCount"] = "ignore"
+		item.Meta["_downloadURL"] = "ignore"
 	}
-
-	correctURL := strings.Contains(items[0].Meta["imgURL"], "cdninstagram.com/vp/cd672a3988fc98ee1b493914193c8545/5D4F2BB4/t51.2885-15/e35/47692668_1958135090974774_6762833792332802352_n.jpg")
-	if !correctURL {
-		t.Fatalf("Incorrect imgURL")
-	}
-	items[0].Meta["imgURL"] = "ignore"
 
 	expected := []service.Item{
 		service.Item{
 			Meta: map[string]string{
-				"imgURL": "ignore",
-				"caption": `Let’s set a world record together and get the most liked post on Instagram. Beating the current world record held by Kylie Jenner (18 million)! We got this 🙌
-
-#LikeTheEgg #EggSoldiers #EggGang`,
-				"author": "world_record_egg",
-				"date":   "2019-01-04T17:05:45",
-				"id":     "BsOGulcndj-",
-				"ext":    "jpg",
+				"id":           "224754696",
+				"title":        "Oldie - OFWGKTA",
+				"username":     "Ishaan Bhagwakar",
+				"createdAt":    "2015/09/20 17:32:13 +0000",
+				"duration":     "636453",
+				"playCount":    "ignore",
+				"ext":          "mp3",
+				"_downloadURL": "ignore",
 			},
 			DefaultName: "%[title].%[ext]",
 		},
