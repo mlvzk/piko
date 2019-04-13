@@ -17,9 +17,11 @@ func main() {
 	var formatStr string
 	var optionsStr string
 	var discoverMode bool
+	var stdoutMode bool
 	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]")
 	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
 	flag.BoolVar(&discoverMode, "discover", false, "Discovery mode, doesn't download anything, only outputs information")
+	flag.BoolVar(&stdoutMode, "stdout", false, "Output download media to stdout")
 	flag.Parse()
 
 	userOptions := parseOptions(optionsStr)
@@ -28,7 +30,7 @@ func main() {
 
 	// target := "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was"
 	// target := "https://imgur.com/t/article13/EfY6CxU"
-	// target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
+	// target := "https://www.youtube.com/watch?v=Gs069dndIYk"
 	// target := "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	target := "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
 	for _, service := range services {
@@ -58,6 +60,12 @@ func main() {
 				reader, err := service.Download(item.Meta, options)
 				if err != nil {
 					log.Printf("Download error: %v, item: %+v\n", err, item)
+					continue
+				}
+
+				if stdoutMode {
+					io.Copy(os.Stdout, reader)
+					tryClose(reader)
 					continue
 				}
 
