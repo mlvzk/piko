@@ -10,20 +10,23 @@ import (
 	"strings"
 
 	piko "github.com/mlvzk/piko"
+	"github.com/mlvzk/piko/service"
 )
 
 func main() {
 	var formatStr string
 	var optionsStr string
+	var discoverMode bool
 	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]")
 	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
+	flag.BoolVar(&discoverMode, "discover", false, "Discovery mode, doesn't download anything, only outputs information")
 	flag.Parse()
 
 	userOptions := parseOptions(optionsStr)
 
 	services := piko.GetAllServices()
 
-	// target := "https://boards.4channel.org/g/thread/70361348/new-desktop-thread"
+	// target := "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was"
 	// target := "https://imgur.com/t/article13/EfY6CxU"
 	// target := "https://www.youtube.com/watch?v=HOK0uF-Z0xM"
 	// target := "https://www.instagram.com/p/Bv9MJCsAvZV/"
@@ -44,6 +47,12 @@ func main() {
 			}
 
 			for _, item := range items {
+				if discoverMode {
+					fmt.Println(prettyPrintItem(item))
+
+					continue
+				}
+
 				options := mergeStringMaps(item.DefaultOptions, userOptions)
 
 				reader, err := service.Download(item.Meta, options)
@@ -141,4 +150,34 @@ func sanitizeFileName(name string) string {
 	name = seps.ReplaceAllString(name, "-")
 
 	return name
+}
+
+func prettyPrintItem(item service.Item) string {
+	builder := strings.Builder{}
+
+	builder.WriteString("Default Name: " + item.DefaultName + "\n")
+
+	builder.WriteString("Meta:\n")
+	for k, v := range item.Meta {
+		if k[0] == '_' {
+			continue
+		}
+
+		builder.WriteString(fmt.Sprintf("\t%s=%s\n", k, v))
+	}
+
+	builder.WriteString("Available Options:\n")
+	for key, values := range item.AvailableOptions {
+		builder.WriteString("\t" + key + ":\n")
+		for _, v := range values {
+			builder.WriteString("\t\t- " + v + "\n")
+		}
+	}
+
+	builder.WriteString("Default Options:\n")
+	for k, v := range item.DefaultOptions {
+		builder.WriteString(fmt.Sprintf("\t%s=%s\n", k, v))
+	}
+
+	return builder.String()
 }
