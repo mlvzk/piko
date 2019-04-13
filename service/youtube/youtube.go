@@ -99,6 +99,9 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	ext := strings.Split(mimeParts[0], "/")[1]
 
 	tmpAudioFile, err := ioutil.TempFile("", "audio*."+ext)
+	if err != nil {
+		return nil, err
+	}
 	io.Copy(tmpAudioFile, audioStream)
 	tmpAudioFile.Close()
 	audioStream.Close()
