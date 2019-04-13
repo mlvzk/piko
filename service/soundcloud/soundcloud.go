@@ -144,8 +144,10 @@ func (i *SoundcloudIterator) Next() ([]service.Item, error) {
 	downloadURL := ""
 	if trackResp.Downloadable {
 		downloadURL = trackResp.DownloadURL
-	} else {
+	} else if trackResp.Streamable {
 		downloadURL = trackResp.StreamURL
+	} else {
+		return nil, errors.New("Track is neither downloadable or streamable")
 	}
 
 	return []service.Item{
