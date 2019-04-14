@@ -77,6 +77,15 @@ func NewSoundcloud(clientID string) Soundcloud {
 	}
 }
 
+type output struct {
+	io.ReadCloser
+	length uint64
+}
+
+func (o output) Size() uint64 {
+	return o.length
+}
+
 func (s Soundcloud) IsValidTarget(target string) bool {
 	return strings.Contains(target, "soundcloud.com/")
 }
@@ -113,7 +122,14 @@ func (s Soundcloud) Download(meta, options map[string]string) (io.Reader, error)
 		meta["ext"] = dotParts[len(dotParts)-1]
 	}
 
-	return resp.Body, nil
+	if resp.ContentLength == -1 {
+		return resp.Body, nil
+	}
+
+	return output{
+		ReadCloser: resp.Body,
+		length:     uint64(resp.ContentLength),
+	}, nil
 }
 
 func (i *SoundcloudIterator) Next() ([]service.Item, error) {

@@ -17,6 +17,15 @@ type FourchanIterator struct {
 	end  bool
 }
 
+type output struct {
+	io.ReadCloser
+	length uint64
+}
+
+func (o output) Size() uint64 {
+	return o.length
+}
+
 func (s Fourchan) IsValidTarget(target string) bool {
 	return strings.Contains(target, "4chan.org/") || strings.Contains(target, "4channel.org/")
 }
@@ -40,7 +49,14 @@ func (s Fourchan) Download(meta, options map[string]string) (io.Reader, error) {
 		return nil, err
 	}
 
-	return resp.Body, nil
+	if resp.ContentLength == -1 {
+		return resp.Body, nil
+	}
+
+	return output{
+		ReadCloser: resp.Body,
+		length:     uint64(resp.ContentLength),
+	}, nil
 }
 
 func (i *FourchanIterator) Next() ([]service.Item, error) {

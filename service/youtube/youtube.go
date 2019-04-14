@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os/exec"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -47,6 +48,15 @@ type format struct {
 	Bitrate       int    `json:"bitrate"`
 }
 
+type output struct {
+	io.ReadCloser
+	length uint64
+}
+
+func (o output) Size() uint64 {
+	return o.length
+}
+
 func (s Youtube) IsValidTarget(target string) bool {
 	return strings.Contains(target, "youtube.com/") || strings.Contains(target, "youtu.be/")
 }
@@ -82,6 +92,16 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	audio := findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
 	video := findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
 
+	// not actual length, but should be close
+	audioLength, err := strconv.ParseInt(audio.ContentLength, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	videoLength, err := strconv.ParseInt(video.ContentLength, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+
 	audioResp, err := http.Get(audio.URL)
 	if err != nil {
 		return nil, err
@@ -115,7 +135,11 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 
 	go cmd.Run()
 
-	return stdout, nil
+	return output{
+		ReadCloser: stdout,
+		// length is not exact, but close enough
+		length: uint64(audioLength + videoLength),
+	}, nil
 }
 
 var ytConfigRegexp = regexp.MustCompile(`ytplayer\.config = (.*?);ytplayer\.load = function()`)

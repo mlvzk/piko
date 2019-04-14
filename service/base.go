@@ -19,3 +19,7 @@ type Service interface {
 	FetchItems(target string) ServiceIterator
 	Download(meta, options map[string]string) (io.Reader, error)
 }
+
+type Sized interface {
+	Size() uint64
+}

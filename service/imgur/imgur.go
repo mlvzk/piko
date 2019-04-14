@@ -17,6 +17,15 @@ type ImgurIterator struct {
 	end  bool
 }
 
+type output struct {
+	io.ReadCloser
+	length uint64
+}
+
+func (o output) Size() uint64 {
+	return o.length
+}
+
 func (s Imgur) IsValidTarget(target string) bool {
 	return strings.Contains(target, "imgur.com/")
 }
@@ -35,7 +44,14 @@ func (s Imgur) Download(meta, options map[string]string) (io.Reader, error) {
 		return nil, err
 	}
 
-	return resp.Body, nil
+	if resp.ContentLength == -1 {
+		return resp.Body, nil
+	}
+
+	return output{
+		ReadCloser: resp.Body,
+		length:     uint64(resp.ContentLength),
+	}, nil
 }
 
 func (i *ImgurIterator) Next() ([]service.Item, error) {

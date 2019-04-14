@@ -60,6 +60,15 @@ type InstagramIterator struct {
 	end bool
 }
 
+type output struct {
+	io.ReadCloser
+	length uint64
+}
+
+func (o output) Size() uint64 {
+	return o.length
+}
+
 func (s Instagram) IsValidTarget(target string) bool {
 	return strings.Contains(target, "instagram.com/")
 }
@@ -76,7 +85,14 @@ func (s Instagram) Download(meta, options map[string]string) (io.Reader, error) 
 		return nil, err
 	}
 
-	return resp.Body, nil
+	if resp.ContentLength == -1 {
+		return resp.Body, nil
+	}
+
+	return output{
+		ReadCloser: resp.Body,
+		length:     uint64(resp.ContentLength),
+	}, nil
 }
 
 func (i *InstagramIterator) Next() ([]service.Item, error) {
