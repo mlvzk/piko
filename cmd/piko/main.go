@@ -14,10 +14,12 @@ import (
 	"gopkg.in/cheggaaa/pb.v1"
 )
 
-var discoveryMode bool
-var stdoutMode bool
-var formatStr string
-var userOptions map[string]string
+var (
+	discoveryMode bool
+	stdoutMode    bool
+	formatStr     string
+	userOptions   map[string]string
+)
 
 func init() {
 	var optionsStr string
@@ -31,7 +33,6 @@ func init() {
 }
 
 func main() {
-
 	services := piko.GetAllServices()
 
 	target := flag.Arg(0)
