@@ -2,18 +2,17 @@ package youtube
 
 import (
 	"encoding/json"
-	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os/exec"
 	"regexp"
 	"strconv"
 	"strings"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/mlvzk/piko/service"
+	"github.com/mlvzk/piko/service/youtube/ytdl"
 )
 
 type Youtube struct{}
@@ -27,6 +26,9 @@ type youtubeConfig struct {
 	Args struct {
 		PlayerResponseStr string `json:"player_response"`
 	} `json:"args"`
+	Assets struct {
+		JS string `json:"js"`
+	} `json:"assets"`
 }
 
 type playerResponse struct {
@@ -46,6 +48,7 @@ type format struct {
 	MimeType      string `json:"mimeType"`
 	ContentLength string `json:"contentLength"`
 	Bitrate       int    `json:"bitrate"`
+	Meta          map[string]string
 }
 
 type output struct {
@@ -69,62 +72,76 @@ func (s Youtube) FetchItems(target string) service.ServiceIterator {
 }
 
 func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
-	ytPlayerResponse := playerResponse{}
-	json.Unmarshal([]byte(meta["_playerResponse"]), &ytPlayerResponse)
+	videoInfo := ytdl.VideoInfo{}
+	json.Unmarshal([]byte(meta["_videoInfo"]), &videoInfo)
 
 	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" {
+		log.Println("here")
 		// no ffmpeg, fallbacking to format with both audio and video
-		video := findBestVideo(ytPlayerResponse.StreamingData.Formats)
-		videoResp, err := http.Get(video.URL)
+		videoFormat := videoInfo.Formats[0]
+		downloadURL, err := videoInfo.GetDownloadURL(videoFormat)
+		if err != nil {
+			return nil, err
+		}
+
+		videoResp, err := http.Get(downloadURL.String())
 		if err != nil {
 			return nil, err
 		}
 		videoStream := videoResp.Body
 
-		mimeParts := strings.Split(video.MimeType, ";")
-		ext := strings.Split(mimeParts[0], "/")[1]
 		// this is bad, in order for this to work file name needs to be formatted after Download is called
-		meta["ext"] = ext
+		meta["ext"] = videoFormat.Extension
 
-		return videoStream, nil
+		return output{
+			ReadCloser: videoStream,
+			length:     uint64(videoResp.ContentLength),
+		}, nil
 	}
 
-	audio := findBestAudio(ytPlayerResponse.StreamingData.AdaptiveFormats)
-	video := findBestVideo(ytPlayerResponse.StreamingData.AdaptiveFormats)
+	videoInfo.Formats.Sort(ytdl.FormatAudioBitrateKey, true)
+	audioFormat := videoInfo.Formats[0]
+	videoInfo.Formats.Sort(ytdl.FormatResolutionKey, true)
+	videoFormat := videoInfo.Formats[0]
 
-	// not actual length, but should be close
-	audioLength, err := strconv.ParseInt(audio.ContentLength, 10, 64)
+	audioURL, err := videoInfo.GetDownloadURL(audioFormat)
 	if err != nil {
 		return nil, err
 	}
-	videoLength, err := strconv.ParseInt(video.ContentLength, 10, 64)
+
+	tmpAudioFile, err := ioutil.TempFile("", "audio*."+audioFormat.Extension)
 	if err != nil {
 		return nil, err
 	}
 
-	audioResp, err := http.Get(audio.URL)
+	// download by 10MB chunks to avoid throttling
+	audioStream, audioStreamWriter := io.Pipe()
+	go io.Copy(tmpAudioFile, audioStream)
+	err = service.DownloadByChunks(audioURL.String(), 0xFFFFF, audioStreamWriter)
 	if err != nil {
 		return nil, err
 	}
-	audioStream := audioResp.Body
-
-	videoResp, err := http.Get(video.URL)
-	if err != nil {
-		return nil, err
-	}
-	videoStream := videoResp.Body
-
-	// MimeType should be: audio/webm; codecs="opus"
-	mimeParts := strings.Split(audio.MimeType, ";")
-	ext := strings.Split(mimeParts[0], "/")[1]
-
-	tmpAudioFile, err := ioutil.TempFile("", "audio*."+ext)
-	if err != nil {
-		return nil, err
-	}
-	io.Copy(tmpAudioFile, audioStream)
-	tmpAudioFile.Close()
+	audioStreamWriter.Close()
 	audioStream.Close()
+
+	stat, err := tmpAudioFile.Stat()
+	if err != nil {
+		return nil, err
+	}
+	audioLength := stat.Size()
+	tmpAudioFile.Close()
+
+	videoURL, err := videoInfo.GetDownloadURL(videoFormat)
+	if err != nil {
+		return nil, err
+	}
+
+	videoStream, videoStreamWriter := io.Pipe()
+	go service.DownloadByChunks(videoURL.String(), 0xFFFFF, videoStreamWriter)
+	videoLength, err := strconv.ParseInt(videoFormat.ValueForKey("clen").(string), 10, 64)
+	if err != nil {
+		videoLength = -1
+	}
 
 	cmd := exec.Command("ffmpeg", "-i", tmpAudioFile.Name(), "-i", "-", "-c", "copy", "-f", "matroska", "-")
 	cmd.Stdin = videoStream
@@ -134,6 +151,10 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	}
 
 	go cmd.Run()
+
+	if audioLength == -1 || videoLength == -1 {
+		return stdout, nil
+	}
 
 	return output{
 		ReadCloser: stdout,
@@ -147,39 +168,22 @@ var ytConfigRegexp = regexp.MustCompile(`ytplayer\.config = (.*?);ytplayer\.load
 func (i *YoutubeIterator) Next() ([]service.Item, error) {
 	i.end = true
 
-	resp, err := http.Get(i.url)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("GET %v returned a wrong status code - %v", i.url, resp.StatusCode)
-	}
-
-	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	videoInfo, err := ytdl.GetVideoInfo(i.url)
 	if err != nil {
 		return nil, err
 	}
 
-	// TODO: download all videos from playlists/channels
-	// this only downloads the main video from the url
-	ytMatches := ytConfigRegexp.FindStringSubmatch(doc.Find("script").Text())
-	if len(ytMatches) < 2 {
-		return nil, errors.New("Couldn't match youtube's json config")
+	videoInfoJson, err := json.Marshal(videoInfo)
+	if err != nil {
+		return nil, err
 	}
-	ytConfigStr := ytMatches[1]
-	ytConfig := youtubeConfig{}
-	json.Unmarshal([]byte(ytConfigStr), &ytConfig)
-
-	ytPlayer := playerResponse{}
-	json.Unmarshal([]byte(ytConfig.Args.PlayerResponseStr), &ytPlayer)
 
 	item := service.Item{
 		Meta: map[string]string{
-			"title":           ytPlayer.VideoDetails.Title,
-			"author":          ytPlayer.VideoDetails.Author,
-			"ext":             "mkv",
-			"_playerResponse": ytConfig.Args.PlayerResponseStr,
+			"title":      videoInfo.Title,
+			"author":     videoInfo.Author,
+			"ext":        "mkv",
+			"_videoInfo": string(videoInfoJson),
 		},
 		DefaultName: "%[title].%[ext]",
 		AvailableOptions: map[string]([]string){

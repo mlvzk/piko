@@ -1,0 +1,3 @@
+[submodule "service/youtube/ytdl"]
+	path = service/youtube/ytdl
+	url = https://github.com/rylio/ytdl

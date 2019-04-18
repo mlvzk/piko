@@ -173,7 +173,7 @@ func tryClose(reader interface{}) error {
 	return nil
 }
 
-var seps = regexp.MustCompile(`[\r\n &_=+:]`)
+var seps = regexp.MustCompile(`[\r\n &_=+:/]`)
 
 func sanitizeFileName(name string) string {
 	name = strings.TrimSpace(name)
