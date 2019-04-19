@@ -72,7 +72,7 @@ func main() {
 
 func handleItem(s service.Service, item service.Item) {
 	if discoveryMode {
-		log.Println(prettyPrintItem(item))
+		log.Println("Item:\n" + prettyPrintItem(item))
 		return
 	}
 
