@@ -53,7 +53,7 @@ func main() {
 			continue
 		}
 
-		fmt.Printf("Found valid service: %+v\n", s)
+		log.Printf("Found valid service: %+v\n", s)
 		iterator := s.FetchItems(target)
 
 		for !iterator.HasEnded() {
@@ -72,7 +72,7 @@ func main() {
 
 func handleItem(s service.Service, item service.Item) {
 	if discoveryMode {
-		fmt.Println(prettyPrintItem(item))
+		log.Println(prettyPrintItem(item))
 		return
 	}
 
@@ -173,7 +173,7 @@ func tryClose(reader interface{}) error {
 	return nil
 }
 
-var seps = regexp.MustCompile(`[\r\n &_=+:]`)
+var seps = regexp.MustCompile(`[\r\n &_=+:/]`)
 
 func sanitizeFileName(name string) string {
 	name = strings.TrimSpace(name)

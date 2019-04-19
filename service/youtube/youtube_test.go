@@ -85,10 +85,10 @@ func TestIteratorNext(t *testing.T) {
 	expected := []service.Item{
 		service.Item{
 			Meta: map[string]string{
-				"_playerResponse": "ignore",
-				"author":          "Veltnox",
-				"title":           "2 hours of Bloomer Music",
-				"ext":             "mkv",
+				"_ytConfig": "ignore",
+				"author":    "Veltnox",
+				"title":     "2 hours of Bloomer Music",
+				"ext":       "mkv",
 			},
 			DefaultName: "%[title].%[ext]",
 			AvailableOptions: map[string]([]string){
