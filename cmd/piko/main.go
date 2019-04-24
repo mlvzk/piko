@@ -42,6 +42,7 @@ func main() {
 	// target = "https://www.youtube.com/watch?v=Gs069dndIYk"
 	// target = "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	// target = "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
+	// target = "https://twitter.com/deadprogram/status/1090554988768698368"
 
 	if target == "" {
 		log.Println("Target can't be empty")
@@ -67,7 +68,10 @@ func main() {
 				handleItem(s, item)
 			}
 		}
+
+		return
 	}
+	log.Println("Couldn't find a valid service. Your link is probably unsupported.")
 }
 
 func handleItem(s service.Service, item service.Item) {
