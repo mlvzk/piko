@@ -77,8 +77,7 @@ func TestIteratorNext(t *testing.T) {
 		t.Fatalf("Items array is empty")
 	}
 
-	correctURL := strings.Contains(items[0].Meta["imgURL"], "cdninstagram.com/vp/cd672a3988fc98ee1b493914193c8545/5D4F2BB4/t51.2885-15/e35/47692668_1958135090974774_6762833792332802352_n.jpg")
-	if !correctURL {
+	if correctURL := strings.Contains(items[0].Meta["imgURL"], "cdninstagram.com"); !correctURL {
 		t.Fatalf("Incorrect imgURL")
 	}
 	items[0].Meta["imgURL"] = "ignore"
