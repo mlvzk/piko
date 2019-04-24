@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"reflect"
 	"regexp"
 	"strings"
 
@@ -42,7 +43,7 @@ func main() {
 	// target = "https://www.youtube.com/watch?v=Gs069dndIYk"
 	// target = "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	// target = "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
-	// target = "https://twitter.com/deadprogram/status/1090554988768698368"
+	target = "https://twitter.com/deadprogram/status/1090554988768698368"
 
 	if target == "" {
 		log.Println("Target can't be empty")
@@ -54,7 +55,7 @@ func main() {
 			continue
 		}
 
-		log.Printf("Found valid service: %+v\n", s)
+		log.Printf("Found valid service: %s\n", reflect.TypeOf(s).Name())
 		iterator := s.FetchItems(target)
 
 		for !iterator.HasEnded() {
