@@ -111,13 +111,16 @@ func (s Twitter) Download(meta, options map[string]string) (io.Reader, error) {
 				return nil, err
 			}
 			playbackBase := playbackURL.Scheme + "://" + playbackURL.Host
-			best, err := getBestM3u8(playbackBase, string(contentBytes))
+			bestContent, err := getBestM3u8(playbackBase, string(contentBytes))
 			if err != nil {
 				return nil, err
 			}
 
-			meta["ext"] = "m3u8"
-			return strings.NewReader(best), nil
+			pipeReader, pipeWriter := io.Pipe()
+			go m3u8ToMpeg(bestContent, pipeWriter)
+
+			meta["ext"] = "mp4"
+			return pipeReader, nil
 		}
 
 		if playbackRes.ContentLength == -1 {

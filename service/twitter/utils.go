@@ -2,6 +2,7 @@ package twitter
 
 import (
 	"errors"
+	"io"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -41,4 +42,24 @@ func getBestM3u8(baseURL, content string) (string, error) {
 	}
 
 	return strings.Join(contentLines, "\n"), nil
+}
+
+func m3u8ToMpeg(content string, writer io.WriteCloser) error {
+	defer writer.Close()
+	lines := strings.Split(content, "\n")
+
+	for _, line := range lines {
+		if len(line) < 4 || line[0:4] != "http" {
+			continue
+		}
+
+		res, err := http.Get(line)
+		if err != nil {
+			return err
+		}
+		io.Copy(writer, res.Body)
+		res.Body.Close()
+	}
+
+	return nil
 }
