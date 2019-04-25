@@ -43,7 +43,8 @@ func main() {
 	// target = "https://www.youtube.com/watch?v=Gs069dndIYk"
 	// target = "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	// target = "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
-	target = "https://twitter.com/deadprogram/status/1090554988768698368"
+	// target = "https://twitter.com/deadprogram/status/1090554988768698368"
+	// target = "https://www.facebook.com/groups/veryblessedimages/permalink/478153699389793/"
 
 	if target == "" {
 		log.Println("Target can't be empty")
@@ -128,6 +129,7 @@ var formatRegexp = regexp.MustCompile(`%\[[[:alnum:]]*\]`)
 
 func format(formatter string, meta map[string]string) string {
 	return formatRegexp.ReplaceAllStringFunc(formatter, func(str string) string {
+		// remove "%[" and "]"
 		key := str[2 : len(str)-1]
 
 		v, ok := meta[key]

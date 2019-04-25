@@ -3,3 +3,4 @@ deps.nix
 shell.nix
 default.nix
 .go
+.vscode
