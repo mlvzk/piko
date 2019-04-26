@@ -24,7 +24,7 @@ var (
 
 func init() {
 	var optionsStr string
-	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]")
+	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]. Use %[default] to fill with default format, ex: downloads/%[default]")
 	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
 	flag.BoolVar(&discoveryMode, "discover", false, "Discovery mode, doesn't download anything, only outputs information")
 	flag.BoolVar(&stdoutMode, "stdout", false, "Output download media to stdout")
@@ -98,20 +98,20 @@ func handleItem(s service.Service, item service.Item) {
 
 	nameFormat := item.DefaultName
 	if formatStr != "" {
-		nameFormat = formatStr
+		nameFormat = strings.Replace(formatStr, "%[default]", item.DefaultName, -1)
 	}
 	name := format(nameFormat, item.Meta)
 
 	if sizedIO, ok := reader.(service.Sized); ok {
 		bar := pb.New64(int64(sizedIO.Size())).SetUnits(pb.U_BYTES)
-		bar.Prefix(truncateString(name, 15))
+		bar.Prefix(truncateString(name, 25))
 		bar.Start()
 		defer bar.Finish()
 
 		reader = bar.NewProxyReader(reader)
 	}
 
-	file, err := os.Create("downloads/" + name)
+	file, err := os.Create(name)
 	if err != nil {
 		log.Printf("Error creating file: %v, name: %v\n", err, name)
 		return
