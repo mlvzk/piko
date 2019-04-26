@@ -18,7 +18,7 @@ func GetAllServices() []service.Service {
 		instagram.Instagram{},
 		fourchan.Fourchan{},
 		soundcloud.NewSoundcloud("a3e059563d7fd3372b49b37f00a00bcf"),
-		twitter.Twitter{},
+		twitter.NewTwitter("AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE"),
 		facebook.Facebook{},
 	}
 }

@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/mlvzk/piko/service"
@@ -40,10 +41,18 @@ func (o output) Size() uint64 {
 	return o.length
 }
 
-type Twitter struct{}
+type Twitter struct {
+	key string
+}
 type TwitterIterator struct {
 	url string
 	end bool
+}
+
+func NewTwitter(apiKey string) Twitter {
+	return Twitter{
+		key: apiKey,
+	}
 }
 
 func (s Twitter) IsValidTarget(target string) bool {
@@ -79,22 +88,37 @@ func (s Twitter) Download(meta, options map[string]string) (io.Reader, error) {
 		if err != nil {
 			return nil, err
 		}
-		configReq.Header.Add("Authorization", "Bearer AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE")
+		configReq.Header.Add("Authorization", "Bearer "+s.key)
 
-		configRes, err := http.DefaultClient.Do(configReq)
-		if err != nil {
-			return nil, err
+		playbackURLStr := ""
+		// retry 4 times, api calls sometimes fail
+		for i := 0; i < 4; i++ {
+			configRes, err := http.DefaultClient.Do(configReq)
+			if err != nil {
+				return nil, err
+			}
+			defer configRes.Body.Close()
+
+			configBytes, err := ioutil.ReadAll(configRes.Body)
+			if err != nil {
+				return nil, err
+			}
+
+			config := videoTweet{}
+			json.Unmarshal(configBytes, &config)
+
+			if config.Track.PlaybackURL != "" {
+				playbackURLStr = config.Track.PlaybackURL
+				break
+			}
+
+			time.Sleep(time.Millisecond * 500)
 		}
-		defer configRes.Body.Close()
 
-		configBytes, err := ioutil.ReadAll(configRes.Body)
-		if err != nil {
-			return nil, err
+		if playbackURLStr == "" {
+			return nil, errors.New("Couldn't get playbackURL")
 		}
-		config := videoTweet{}
-		json.Unmarshal(configBytes, &config)
 
-		playbackURLStr := config.Track.PlaybackURL
 		playbackRes, err := http.Get(playbackURLStr)
 		if err != nil {
 			return nil, err
