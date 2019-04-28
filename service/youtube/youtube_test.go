@@ -2,15 +2,11 @@ package youtube
 
 import (
 	"flag"
-	"io"
-	"net/http"
-	"net/http/httptest"
-	"os"
-	"path/filepath"
 	"testing"
 
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/mlvzk/piko/service"
+	"github.com/mlvzk/piko/service/testutil"
 )
 
 const base = "https://www.youtube.com"
@@ -34,37 +30,11 @@ func TestIsValidTarget(t *testing.T) {
 }
 
 func TestIteratorNext(t *testing.T) {
-	path := "/watch?v=HOK0uF-Z0xM"
-
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		golden := filepath.Join("testdata", t.Name()+"-resp.golden")
-
-		if *update {
-			resp, err := http.Get(base + path)
-			if err != nil {
-				t.Fatalf("Error updating golden file: %v", err)
-			}
-			defer resp.Body.Close()
-
-			file, err := os.Create(golden)
-			if err != nil {
-				t.Fatalf("Error creating golden file")
-			}
-
-			io.Copy(file, resp.Body)
-			file.Close()
-		}
-
-		goldenFile, err := os.Open(golden)
-		if err != nil {
-			t.Fatalf("Couldn't open the golden file: %v", err)
-		}
-		io.Copy(w, goldenFile)
-	}))
+	ts := testutil.CacheHttpRequest(t, base, *update)
 	defer ts.Close()
 
 	iterator := YoutubeIterator{
-		url: ts.URL + path,
+		url: ts.URL + "/watch?v=HOK0uF-Z0xM",
 	}
 
 	items, err := iterator.Next()

@@ -2,16 +2,12 @@ package instagram
 
 import (
 	"flag"
-	"io"
-	"net/http"
-	"net/http/httptest"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/kylelemons/godebug/pretty"
 	"github.com/mlvzk/piko/service"
+	"github.com/mlvzk/piko/service/testutil"
 )
 
 const base = "https://www.instagram.com"
@@ -35,37 +31,11 @@ func TestIsValidTarget(t *testing.T) {
 }
 
 func TestIteratorNext(t *testing.T) {
-	path := "/p/BsOGulcndj-/"
-
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		golden := filepath.Join("testdata", t.Name()+"-resp.golden")
-
-		if *update {
-			resp, err := http.Get(base + path)
-			if err != nil {
-				t.Fatalf("Error updating golden file: %v", err)
-			}
-			defer resp.Body.Close()
-
-			file, err := os.Create(golden)
-			if err != nil {
-				t.Fatalf("Error creating golden file")
-			}
-
-			io.Copy(file, resp.Body)
-			file.Close()
-		}
-
-		goldenFile, err := os.Open(golden)
-		if err != nil {
-			t.Fatalf("Couldn't open the golden file: %v", err)
-		}
-		io.Copy(w, goldenFile)
-	}))
+	ts := testutil.CacheHttpRequest(t, base, *update)
 	defer ts.Close()
 
 	iterator := InstagramIterator{
-		url: ts.URL + path,
+		url: ts.URL + "/p/BsOGulcndj-/",
 	}
 
 	items, err := iterator.Next()
