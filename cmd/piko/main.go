@@ -25,7 +25,7 @@ var (
 func init() {
 	var optionsStr string
 	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]. Use %[default] to fill with default format, ex: downloads/%[default]")
-	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -o thumbnail=yes,quality=high")
+	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -options thumbnail=yes,quality=high")
 	flag.BoolVar(&discoveryMode, "discover", false, "Discovery mode, doesn't download anything, only outputs information")
 	flag.BoolVar(&stdoutMode, "stdout", false, "Output download media to stdout")
 	flag.Parse()

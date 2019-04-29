@@ -64,6 +64,8 @@ func (s Youtube) FetchItems(target string) service.ServiceIterator {
 }
 
 func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
+	quality := options["quality"]
+
 	ytConfig := youtubeConfig{}
 	json.Unmarshal([]byte(meta["_ytConfig"]), &ytConfig)
 
@@ -99,8 +101,26 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		return videoStream, nil
 	}
 
-	audioFormat := findBestAudio(formats)
-	videoFormat := findBestVideo(formats)
+	audioFormat, audioFormatFound := findBestAudio(formats)
+	var (
+		videoFormat      ytdl.Format
+		videoFormatFound bool
+	)
+	if quality == "best" {
+		videoFormat, videoFormatFound = findBestVideo(formats)
+	} else if quality == "medium" {
+		videoFormat, videoFormatFound = findMediumVideo(formats)
+		if !videoFormatFound {
+			// fallback to best if medium not found
+			videoFormat, videoFormatFound = findBestVideo(formats)
+		}
+	} else {
+		videoFormat, videoFormatFound = findWorstVideo(formats)
+	}
+
+	if !audioFormatFound || !videoFormatFound {
+		return nil, errors.New("Couldn't find either audio or video format")
+	}
 
 	// not actual length, but should be close
 	audioLengthMeta, hasAudioLength := audioFormat.Meta["clen"]
@@ -201,7 +221,7 @@ func (i *YoutubeIterator) Next() ([]service.Item, error) {
 			"useFfmpeg": []string{"yes", "no"},
 		},
 		DefaultOptions: map[string]string{
-			"quality":   "best",
+			"quality":   "medium",
 			"useFfmpeg": "yes",
 		},
 	}
@@ -229,25 +249,23 @@ func findBestVideoAudio(formats []ytdl.Format) ytdl.Format {
 	return best
 }
 
-func findBestAudio(formats []ytdl.Format) ytdl.Format {
-	var best ytdl.Format
-
+func findBestAudio(formats []ytdl.Format) (audio ytdl.Format, found bool) {
 	for _, f := range formats {
 		if f.AudioEncoding == "" || f.VideoEncoding != "" {
 			continue
 		}
 
-		if f.AudioBitrate > best.AudioBitrate {
-			best = f
+		if f.AudioBitrate > audio.AudioBitrate {
+			audio = f
+			found = true
 		}
 	}
 
-	return best
+	return
 }
 
-func findBestVideo(formats []ytdl.Format) ytdl.Format {
-	var best ytdl.Format
-	var bestBitrate int
+func _findVideo(formats []ytdl.Format, best bool) (video ytdl.Format, found bool) {
+	var currBitrate int
 
 	for _, f := range formats {
 		if f.VideoEncoding == "" || f.AudioEncoding != "" {
@@ -263,13 +281,54 @@ func findBestVideo(formats []ytdl.Format) ytdl.Format {
 			continue
 		}
 
-		if bitrate > bestBitrate {
-			best = f
-			bestBitrate = bitrate
+		if (best && bitrate > currBitrate) ||
+			(!best && (bitrate < currBitrate || !found)) {
+			video = f
+			currBitrate = bitrate
+			found = true
 		}
 	}
 
-	return best
+	return
+}
+
+func findBestVideo(formats []ytdl.Format) (video ytdl.Format, found bool) {
+	return _findVideo(formats, true)
+}
+
+func findWorstVideo(formats []ytdl.Format) (video ytdl.Format, found bool) {
+	return _findVideo(formats, false)
+}
+
+// medium is 1080p, 720p or 480p
+// prefers 1080p > 720p > 480p
+func findMediumVideo(formats []ytdl.Format) (video ytdl.Format, found bool) {
+	var currBitrate int
+	allowedRes := map[string]bool{"1080p": true, "720p": true, "480p": true}
+
+	for _, f := range formats {
+		if f.VideoEncoding == "" || f.AudioEncoding != "" {
+			continue
+		}
+
+		bitrateI, exists := f.Meta["bitrate"]
+		if !exists {
+			continue
+		}
+		bitrate, err := strconv.Atoi(bitrateI.(string))
+		if err != nil {
+			continue
+		}
+
+		allowed, inRange := allowedRes[f.Resolution]
+		if inRange && allowed && bitrate > currBitrate {
+			video = f
+			currBitrate = bitrate
+			found = true
+		}
+	}
+
+	return
 }
 
 func getFormats(strs ...string) []ytdl.Format {
