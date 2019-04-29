@@ -1,15 +1,25 @@
 language: go
-go: "1.12"
+go: 1.12.x
+
+matrix:
+  fast_finish: true
+  include:
+    - os: linux
+    - os: osx
+      env: SUFFIX=-macos
+    - os: windows
+      env: SUFFIX=.exe
 
 before_deploy:
-  - CGO_ENABLED=0 GOOS=linux go build -a -ldflags="-s -w" -installsuffix cgo -o piko cmd/piko/main.go
+  - mkdir -p result
+  - CGO_ENABLED=0 go build -a -ldflags="-s -w" -installsuffix cgo -o "result/piko$SUFFIX" cmd/piko/main.go
 deploy:
   provider: releases
   api_key:
     secure: ZQReulfHiO6PLlwh7RGRg/+hq5D7hpHTioHO13Pb1L2tyv93sRi5+QxpOkP+oKu738MOQucDbh4ZZOCSF+2fJjo4lPASUR9tbKzzjdseCxW6wS8YF+vv+NpTBsTAdZ9+ZpiT7zQfv7N0uLTxiLgHujhdBYJXhVTFQQ60YkEw5V3+rdKYikkQD2dQhHP/bOrinUY7gB1ad/oiufCObsy20pQHWBrAI421wEPqSp36VYxK3lHMxFFCQ6O8A4m/t2eUzLNyb9aCTXQj2HAkZj7AX4eyb5ZxnZq34gSTXU1YtfXiPaChz0VSqVjooMAgCMfXJxIJw0UbLcBSAttXlHZ6dvY+/nU6CgsEigFbLTuo2mRI7Jgrh31ndp9ApsT1Z5FJFdsPNX1IlWIgPOteHXSIvz6nGwGS5NL1c+ZyyAC6O+huShA9sBGaohMdnbt5HRX1D4uESUaudMv9wiABfLGpTlfcBbelexG/Z+qWATpuj6cIkFhvfVV6R65fNKt+U494csh9jrdjMjw7OcNJ/rAOb6mklPNCpc5zcX3Vc0p6rZObBEvBzJPLf9V3gy4I7iAUU5zg2rruapTronEhRcwdRP1uvapKAdL4H7C/2I/aCvsEuChNjkmh1GT6MrYqVv8mmL5rgqcFFoJIEQrq676ldxF9Gbbt1sDP7BhzXl4oilU=
   skip_cleanup: true
-  file:
-    - piko
+  file_glob: true
+  file: result/*
   on:
     repo: mlvzk/piko
     tags: true
