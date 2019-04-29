@@ -66,7 +66,7 @@ func TestIteratorNext(t *testing.T) {
 				"useFfmpeg": []string{"yes", "no"},
 			},
 			DefaultOptions: map[string]string{
-				"quality":   "best",
+				"quality":   "medium",
 				"useFfmpeg": "yes",
 			},
 		},
