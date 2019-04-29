@@ -50,7 +50,7 @@ func TestIteratorNext(t *testing.T) {
 	}
 
 	expected := []service.Item{
-		service.Item{
+		{
 			Meta: map[string]string{
 				"id":           "224754696",
 				"title":        "Oldie - OFWGKTA",

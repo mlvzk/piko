@@ -53,7 +53,7 @@ func TestIteratorNext(t *testing.T) {
 	}
 
 	expected := []service.Item{
-		service.Item{
+		{
 			Meta: map[string]string{
 				"id":          "8057020672024510464",
 				"author":      "Shiba Inu Zero.Mika",
@@ -64,7 +64,7 @@ func TestIteratorNext(t *testing.T) {
 			},
 			DefaultName: "%[author]-%[id].%[ext]",
 		},
-		service.Item{
+		{
 			Meta: map[string]string{
 				"id":          "2750275577282508998",
 				"author":      "Shiba Inu Zero.Mika",

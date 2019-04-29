@@ -52,7 +52,7 @@ func TestIteratorNext(t *testing.T) {
 	items[0].Meta["downloadURL"] = "ignore"
 
 	expected := []service.Item{
-		service.Item{
+		{
 			Meta: map[string]string{
 				"downloadURL": "ignore",
 				"index":       "0",

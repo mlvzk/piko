@@ -127,7 +127,7 @@ func (i *InstagramIterator) Next() ([]service.Item, error) {
 		json.Unmarshal([]byte(schemaStr), &sch)
 
 		return []service.Item{
-			service.Item{
+			{
 				Meta: map[string]string{
 					"imgURL":  imgURL,
 					"caption": sch.Caption,

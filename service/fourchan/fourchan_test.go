@@ -43,7 +43,7 @@ func TestIteratorNext(t *testing.T) {
 	}
 
 	expected := []service.Item{
-		service.Item{
+		{
 			Meta: map[string]string{
 				"title":        "1306532808724.png",
 				"imgURL":       "https://i.4cdn.org/adv/1554743536847.png",
@@ -53,13 +53,13 @@ func TestIteratorNext(t *testing.T) {
 			},
 			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{
-				"thumbnail": []string{"yes", "no"},
+				"thumbnail": {"yes", "no"},
 			},
 			DefaultOptions: map[string]string{
 				"thumbnail": "no",
 			},
 		},
-		service.Item{
+		{
 			Meta: map[string]string{
 				"title":        "1306532948201.png",
 				"imgURL":       "https://i.4cdn.org/adv/1554745883162.png",
@@ -69,7 +69,7 @@ func TestIteratorNext(t *testing.T) {
 			},
 			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{
-				"thumbnail": []string{"yes", "no"},
+				"thumbnail": {"yes", "no"},
 			},
 			DefaultOptions: map[string]string{
 				"thumbnail": "no",

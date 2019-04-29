@@ -114,7 +114,7 @@ func (i *FourchanIterator) Next() ([]service.Item, error) {
 			},
 			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{
-				"thumbnail": []string{"yes", "no"},
+				"thumbnail": {"yes", "no"},
 			},
 			DefaultOptions: map[string]string{
 				"thumbnail": "no",

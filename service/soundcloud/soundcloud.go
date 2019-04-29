@@ -167,7 +167,7 @@ func (i *SoundcloudIterator) Next() ([]service.Item, error) {
 	}
 
 	return []service.Item{
-		service.Item{
+		{
 			Meta: map[string]string{
 				"id":           strconv.Itoa(trackResp.ID),
 				"title":        trackResp.Title,
