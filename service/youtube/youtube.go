@@ -71,7 +71,7 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 
 	formats := getFormats(ytConfig.Args.AdaptiveFmts, ytConfig.Args.URLEncodedFmtStreamMap)
 
-	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" {
+	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" && options["onlyAudio"] != "yes" {
 		// no ffmpeg, fallbacking to format with both audio and video
 		video := findBestVideoAudio(formats)
 		videoURL, err := ytdl.GetDownloadURL(video.Meta, ytConfig.Assets.JS)
@@ -126,6 +126,22 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	audioLengthMeta, hasAudioLength := audioFormat.Meta["clen"]
 	audioLength, _ := strconv.ParseInt(audioLengthMeta.(string), 10, 64)
 
+	audioURL, err := ytdl.GetDownloadURL(audioFormat.Meta, ytConfig.Assets.JS)
+	if err != nil {
+		return nil, err
+	}
+
+	if options["onlyAudio"] == "yes" {
+		meta["ext"] = audioFormat.Extension
+		audioStream, audioStreamWriter := io.Pipe()
+		go service.DownloadByChunks(audioURL.String(), 0xFFFFF, audioStreamWriter)
+
+		return output{
+			ReadCloser: audioStream,
+			length:     uint64(audioLength),
+		}, nil
+	}
+
 	videoLengthMeta, hasVideoLength := videoFormat.Meta["clen"]
 	videoLength, _ := strconv.ParseInt(videoLengthMeta.(string), 10, 64)
 
@@ -134,10 +150,6 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		return nil, err
 	}
 
-	audioURL, err := ytdl.GetDownloadURL(audioFormat.Meta, ytConfig.Assets.JS)
-	if err != nil {
-		return nil, err
-	}
 	audioStream, audioStreamWriter := io.Pipe()
 	go io.Copy(tmpAudioFile, audioStream)
 	err = service.DownloadByChunks(audioURL.String(), 0xFFFFF, audioStreamWriter)
@@ -219,10 +231,12 @@ func (i *YoutubeIterator) Next() ([]service.Item, error) {
 		AvailableOptions: map[string]([]string){
 			"quality":   []string{"best", "medium", "worst"},
 			"useFfmpeg": []string{"yes", "no"},
+			"onlyAudio": []string{"yes", "no"},
 		},
 		DefaultOptions: map[string]string{
 			"quality":   "medium",
 			"useFfmpeg": "yes",
+			"onlyAudio": "no",
 		},
 	}
 
