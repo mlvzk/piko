@@ -64,10 +64,12 @@ func TestIteratorNext(t *testing.T) {
 			AvailableOptions: map[string]([]string){
 				"quality":   []string{"best", "medium", "worst"},
 				"useFfmpeg": []string{"yes", "no"},
+				"onlyAudio": []string{"yes", "no"},
 			},
 			DefaultOptions: map[string]string{
 				"quality":   "medium",
 				"useFfmpeg": "yes",
+				"onlyAudio": "no",
 			},
 		},
 	}
