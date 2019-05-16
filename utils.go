@@ -13,12 +13,12 @@ import (
 
 func GetAllServices() []service.Service {
 	return []service.Service{
-		youtube.Youtube{},
-		imgur.Imgur{},
-		instagram.Instagram{},
-		fourchan.Fourchan{},
-		soundcloud.NewSoundcloud("a3e059563d7fd3372b49b37f00a00bcf"),
-		twitter.NewTwitter("AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE"),
-		facebook.Facebook{},
+		youtube.New(),
+		imgur.New(),
+		instagram.New(),
+		fourchan.New(),
+		soundcloud.New("a3e059563d7fd3372b49b37f00a00bcf"),
+		twitter.New("AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE"),
+		facebook.New(),
 	}
 }

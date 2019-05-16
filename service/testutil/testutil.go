@@ -1,7 +1,6 @@
 package testutil
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -15,7 +14,6 @@ func CacheHttpRequest(t *testing.T, base string, update bool) *httptest.Server {
 		golden := filepath.Join("testdata", t.Name()+"-resp.golden")
 
 		if update {
-			fmt.Println("here", base+r.URL.Path+"?"+r.URL.RawQuery)
 			resp, err := http.Get(base + r.URL.Path + "?" + r.URL.RawQuery)
 			if err != nil {
 				t.Fatalf("Error updating golden file: %v", err)

@@ -24,6 +24,10 @@ type YoutubeIterator struct {
 	end bool
 }
 
+func New() Youtube {
+	return Youtube{}
+}
+
 // youtubeConfig is a partial structure for deserializing youtube's json config
 type youtubeConfig struct {
 	Args struct {

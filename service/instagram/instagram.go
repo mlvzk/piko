@@ -60,6 +60,10 @@ type InstagramIterator struct {
 	end bool
 }
 
+func New() Instagram {
+	return Instagram{}
+}
+
 type output struct {
 	io.ReadCloser
 	length uint64

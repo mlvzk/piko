@@ -49,7 +49,7 @@ type TwitterIterator struct {
 	end bool
 }
 
-func NewTwitter(apiKey string) Twitter {
+func New(apiKey string) Twitter {
 	return Twitter{
 		key: apiKey,
 	}

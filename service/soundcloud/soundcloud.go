@@ -71,7 +71,7 @@ type SoundcloudIterator struct {
 	end        bool
 }
 
-func NewSoundcloud(clientID string) Soundcloud {
+func New(clientID string) Soundcloud {
 	return Soundcloud{
 		clientID: clientID,
 	}

@@ -17,6 +17,10 @@ type FourchanIterator struct {
 	end  bool
 }
 
+func New() Fourchan {
+	return Fourchan{}
+}
+
 type output struct {
 	io.ReadCloser
 	length uint64

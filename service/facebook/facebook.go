@@ -31,6 +31,10 @@ type FacebookIterator struct {
 	end bool
 }
 
+func New() Facebook {
+	return Facebook{}
+}
+
 func (s Facebook) IsValidTarget(target string) bool {
 	return strings.Contains(target, "facebook.com/")
 }

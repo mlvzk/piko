@@ -17,6 +17,10 @@ type ImgurIterator struct {
 	end  bool
 }
 
+func New() Imgur {
+	return Imgur{}
+}
+
 type output struct {
 	io.ReadCloser
 	length uint64
