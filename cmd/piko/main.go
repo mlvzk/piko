@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -10,6 +10,8 @@ import (
 
 	"github.com/mlvzk/piko"
 	"github.com/mlvzk/piko/service"
+	"github.com/mlvzk/qtils/commandparser"
+	"github.com/mlvzk/qtils/commandparser/commandhelper"
 	"gopkg.in/cheggaaa/pb.v1"
 )
 
@@ -17,61 +19,131 @@ var (
 	discoveryMode bool
 	stdoutMode    bool
 	formatStr     string
-	userOptions   map[string]string
+	targets       []string
+	userOptions   = map[string]string{}
 )
 
-func init() {
-	var optionsStr string
-	flag.StringVar(&formatStr, "format", "", "File path format, ex: -format %[id].%[ext]. Use %[default] to fill with default format, ex: downloads/%[default]")
-	flag.StringVar(&optionsStr, "options", "", "Download options, ex: -options thumbnail=yes,quality=high")
-	flag.BoolVar(&discoveryMode, "discover", false, "Discovery mode, doesn't download anything, only outputs information")
-	flag.BoolVar(&stdoutMode, "stdout", false, "Output download media to stdout")
-	flag.Parse()
+func handleArgv(argv []string) {
+	parser := commandparser.New()
+	helper := commandhelper.New()
 
-	userOptions = parseOptions(optionsStr)
+	helper.SetName("piko")
+	helper.SetVersion("alpha")
+	helper.AddAuthor("mlvzk")
+
+	helper.AddUsage(
+		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'",
+		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' -stdout | mpv -",
+	)
+
+	parser.AddOption(helper.EatOption(
+		commandhelper.NewOption("help").Alias("h").Boolean().Description("Prints this page").Build(),
+		commandhelper.
+			NewOption("format").
+			Alias("f").
+			Description("File path format, ex: -format %[id].%[ext]. Use %[default] to fill with default format, ex: downloads/%[default]").
+			Build(),
+		commandhelper.
+			NewOption("option").
+			Alias("o").
+			Arrayed().
+			Description("Download options, ex: --option quality=best").
+			Build(),
+		commandhelper.
+			NewOption("discover").
+			Alias("d").
+			Boolean().
+			Description("Discovery mode, doesn't download anything, only outputs information").
+			Build(),
+		commandhelper.
+			NewOption("stdout").
+			Boolean().
+			Description("Output download media to stdout").
+			Build(),
+	)...)
+
+	cmd, err := parser.Parse(argv)
+	if err != nil {
+		log.Println(err)
+		os.Exit(1)
+	}
+
+	if cmd.Booleans["help"] {
+		fmt.Print(helper.Help())
+		os.Exit(1)
+	}
+
+	cmd.Args = helper.FillDefaults(cmd.Args)
+	errs := helper.Verify(cmd.Args, cmd.Arrayed)
+	for _, err := range errs {
+		log.Println(err)
+	}
+	if len(errs) != 0 {
+		os.Exit(1)
+	}
+
+	formatStr = cmd.Args["format"]
+	discoveryMode = cmd.Booleans["discover"]
+	stdoutMode = cmd.Booleans["stdout"]
+
+	for _, option := range cmd.Arrayed["option"] {
+		keyValue := strings.Split(option, "=")
+		key, value := keyValue[0], keyValue[1]
+
+		userOptions[key] = value
+	}
+
+	targets = cmd.Positionals
 }
 
 func main() {
-	services := piko.GetAllServices()
+	handleArgv(os.Args)
 
-	target := flag.Arg(0)
+	services := piko.GetAllServices()
 
 	// target = "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was"
 	// target = "https://imgur.com/t/article13/EfY6CxU"
 	// target = "https://www.youtube.com/watch?v=Gs069dndIYk"
+	// target = "https://www.youtube.com/watch?v=7IwYakbxmxo"
 	// target = "https://www.instagram.com/p/Bv9MJCsAvZV/"
 	// target = "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
 	// target = "https://twitter.com/deadprogram/status/1090554988768698368"
 	// target = "https://www.facebook.com/groups/veryblessedimages/permalink/478153699389793/"
 
-	if target == "" {
-		log.Println("Target can't be empty")
-		return
-	}
-
-	for _, s := range services {
-		if !s.IsValidTarget(target) {
-			continue
+	for _, target := range targets {
+		if target == "" {
+			log.Println("Target can't be empty")
+			break
 		}
 
-		log.Printf("Found valid service: %s\n", reflect.TypeOf(s).Name())
-		iterator := s.FetchItems(target)
-
-		for !iterator.HasEnded() {
-			items, err := iterator.Next()
-			if err != nil {
-				log.Printf("Iteration error: %v; target: %v", err, target)
-				break
+		var foundAnyService bool
+		for _, s := range services {
+			if !s.IsValidTarget(target) {
+				continue
 			}
 
-			for _, item := range items {
-				handleItem(s, item)
+			foundAnyService = true
+			log.Printf("Found valid service: %s\n", reflect.TypeOf(s).Name())
+			iterator := s.FetchItems(target)
+
+			for !iterator.HasEnded() {
+				items, err := iterator.Next()
+				if err != nil {
+					log.Printf("Iteration error: %v; target: %v\n", err, target)
+					break
+				}
+
+				for _, item := range items {
+					handleItem(s, item)
+				}
 			}
+
+			break
 		}
-
-		return
+		if !foundAnyService {
+			log.Fatalf("Couldn't find a valid service for url '%s'. Your link is probably unsupported.\n", target)
+		}
 	}
-	log.Println("Couldn't find a valid service. Your link is probably unsupported.")
 }
 
 func handleItem(s service.Service, item service.Item) {

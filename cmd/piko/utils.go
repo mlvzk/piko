@@ -25,24 +25,6 @@ func format(formatter string, meta map[string]string) string {
 	})
 }
 
-func parseOptions(optionsStr string) map[string]string {
-	options := map[string]string{}
-
-	declarations := strings.Split(optionsStr, ",")
-	for _, declaration := range declarations {
-		if declaration == "" {
-			continue
-		}
-
-		keyValue := strings.Split(declaration, "=")
-		key, value := keyValue[0], keyValue[1]
-
-		options[key] = value
-	}
-
-	return options
-}
-
 // order of args matters
 func mergeStringMaps(maps ...map[string]string) map[string]string {
 	merged := map[string]string{}
