@@ -12,7 +12,7 @@ matrix:
 
 before_deploy:
   - mkdir -p result
-  - CGO_ENABLED=0 go build -a -ldflags="-s -w" -installsuffix cgo -o "result/piko$SUFFIX" cmd/piko/main.go
+  - CGO_ENABLED=0 go build -a -ldflags="-s -w" -installsuffix cgo -o "result/piko$SUFFIX" cmd/piko/*
 deploy:
   provider: releases
   api_key:
