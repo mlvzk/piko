@@ -32,6 +32,7 @@ func handleArgv(argv []string) {
 	helper.AddAuthor("mlvzk")
 
 	helper.AddUsage(
+		"piko [urls...]",
 		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'",
 		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' -stdout | mpv -",
 	)
