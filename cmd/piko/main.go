@@ -58,7 +58,7 @@ func handleArgv(argv []string) {
 		commandhelper.
 			NewOption("format").
 			Alias("f").
-			Description("File path format, ex: -format %[id].%[ext]. Use %[default] to fill with default format, ex: downloads/%[default]").
+			Description("File path format, ex: --format %[id].%[ext]. `id` and `ext` are meta tags(see --discover). Use %[default] to fill with default format, ex: downloads/%[default]").
 			Build(),
 		commandhelper.
 			NewOption("option").
@@ -85,7 +85,7 @@ func handleArgv(argv []string) {
 		os.Exit(1)
 	}
 
-	if cmd.Booleans["help"] {
+	if cmd.Booleans["help"] || len(cmd.Positionals) == 0 {
 		fmt.Print(helper.Help())
 		os.Exit(1)
 	}
