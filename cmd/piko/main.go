@@ -130,7 +130,7 @@ func main() {
 	for _, target := range targets {
 		if target == "" {
 			log.Println("Target can't be empty")
-			break
+			continue
 		}
 
 		var foundAnyService bool
@@ -158,7 +158,7 @@ func main() {
 			break
 		}
 		if !foundAnyService {
-			log.Fatalf("Couldn't find a valid service for url '%s'. Your link is probably unsupported.\n", target)
+			log.Printf("Error: Couldn't find a valid service for url '%s'. Your link is probably unsupported.\n", target)
 		}
 	}
 }
