@@ -5,13 +5,15 @@ go 1.12
 require (
 	github.com/PuerkitoBio/goquery v1.5.0
 	github.com/fatih/color v1.7.0 // indirect
-	github.com/kylelemons/godebug v1.0.0
+	github.com/kylelemons/godebug v1.1.0
 	github.com/mattn/go-colorable v0.1.1 // indirect
-	github.com/mattn/go-isatty v0.0.7 // indirect
+	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
-	github.com/mlvzk/qtils v0.3.1
-	golang.org/x/crypto v0.0.0-20190418165655-df01cb2cc480 // indirect
-	golang.org/x/net v0.0.0-20190419010253-1f3472d942ba // indirect
-	golang.org/x/sys v0.0.0-20190418153312-f0ce4c0180be // indirect
+	github.com/mlvzk/qtils v0.4.1
+	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
+	golang.org/x/net v0.0.0-20190522135303-fa69b94a3b58 // indirect
+	golang.org/x/sys v0.0.0-20190522044717-8097e1b27ff5 // indirect
+	golang.org/x/text v0.3.2 // indirect
+	golang.org/x/tools v0.0.0-20190521203540-521d6ed310dd // indirect
 	gopkg.in/cheggaaa/pb.v1 v1.0.28
 )

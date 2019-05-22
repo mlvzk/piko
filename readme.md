@@ -42,5 +42,5 @@ piko --discover 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
 
 ```sh
 # output to stdout, open mpv to read from stdin
-piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' -stdout | mpv -
+piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' --stdout | mpv -
 ```

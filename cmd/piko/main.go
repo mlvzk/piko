@@ -50,33 +50,28 @@ func handleArgv(argv []string) {
 	helper.AddUsage(
 		"piko [urls...]",
 		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'",
-		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' -stdout | mpv -",
+		"piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' --stdout | mpv -",
 	)
 
 	parser.AddOption(helper.EatOption(
-		commandhelper.NewOption("help").Alias("h").Boolean().Description("Prints this page").Build(),
+		commandhelper.NewOption("help").Alias("h").Boolean().Description("Prints this page"),
 		commandhelper.
 			NewOption("format").
 			Alias("f").
-			Description("File path format, ex: --format %[id].%[ext]. `id` and `ext` are meta tags(see --discover). Use %[default] to fill with default format, ex: downloads/%[default]").
-			Build(),
+			Description(`File path format, ex: --format %[id].%[ext]. "id" and "ext" are meta tags(see --discover).
+Use %[default] to fill with default format, ex: downloads/%[default]`),
 		commandhelper.
 			NewOption("option").
 			Alias("o").
 			Arrayed().
-			Description("Download options, ex: --option quality=best").
-			Build(),
+			ValidateBind(commandhelper.ValidateKeyValue("=")).
+			Description("Download options, ex: --option quality=best"),
 		commandhelper.
 			NewOption("discover").
 			Alias("d").
 			Boolean().
-			Description("Discovery mode, doesn't download anything, only outputs information").
-			Build(),
-		commandhelper.
-			NewOption("stdout").
-			Boolean().
-			Description("Output download media to stdout").
-			Build(),
+			Description("Discovery mode, doesn't download anything, only outputs information"),
+		commandhelper.NewOption("stdout").Boolean().Description("Output download media to stdout"),
 	)...)
 
 	cmd, err := parser.Parse(argv)
