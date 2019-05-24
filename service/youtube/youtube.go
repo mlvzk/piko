@@ -85,13 +85,15 @@ func (s Youtube) FetchItems(target string) service.ServiceIterator {
 
 func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	quality := options["quality"]
+	useFfmpeg := options["useFfmpeg"] == "yes"
+	onlyAudio := options["onlyAudio"] == "yes"
 
 	ytConfig := youtubeConfig{}
 	json.Unmarshal([]byte(meta["_ytConfig"]), &ytConfig)
 
 	formats := getFormats(ytConfig.Args.AdaptiveFmts, ytConfig.Args.URLEncodedFmtStreamMap)
 
-	if _, err := exec.LookPath("ffmpeg"); err != nil || options["useFfmpeg"] == "no" && options["onlyAudio"] != "yes" {
+	if _, err := exec.LookPath("ffmpeg"); (err != nil || !useFfmpeg) && !onlyAudio {
 		// no ffmpeg, fallbacking to format with both audio and video
 		video := findBestVideoAudio(formats)
 		videoURL, err := ytdl.GetDownloadURL(video.Meta, ytConfig.Assets.JS)
@@ -151,7 +153,7 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		return nil, err
 	}
 
-	if options["onlyAudio"] == "yes" {
+	if onlyAudio {
 		meta["ext"] = audioFormat.Extension
 		audioStream, audioStreamWriter := io.Pipe()
 		go service.DownloadByChunks(audioURL.String(), 0xFFFFF, audioStreamWriter)
