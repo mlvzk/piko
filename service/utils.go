@@ -22,6 +22,21 @@ import (
 	"net/http"
 )
 
+func FetchContentLength(url string) (int64, error) {
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return -1, err
+	}
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return -1, err
+	}
+	res.Body.Close()
+
+	return res.ContentLength, nil
+}
+
 func DownloadByChunks(url string, chunkSize uint64, writer io.WriteCloser) error {
 	var pos uint64
 

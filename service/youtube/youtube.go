@@ -107,13 +107,24 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		// this is bad, in order for this to work file name needs to be formatted after Download is called
 		meta["ext"] = video.Extension
 
+		var videoLength int64
 		videoLengthMeta, hasLength := video.Meta["clen"]
 		if hasLength {
-			videoLength, err := strconv.ParseInt(videoLengthMeta.(string), 10, 64)
+			videoLength, err = strconv.ParseInt(videoLengthMeta.(string), 10, 64)
 			if err != nil {
-				return nil, err
+				hasLength = false
 			}
+		}
+		if !hasLength {
+			videoLength, err = service.FetchContentLength(videoURL.String())
+			if err != nil {
+				hasLength = false
+			} else {
+				hasLength = true
+			}
+		}
 
+		if hasLength && videoLength != -1 {
 			return &output{
 				ReadCloser: videoStream,
 				length:     uint64(videoLength),
