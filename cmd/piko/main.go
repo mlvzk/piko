@@ -39,7 +39,7 @@ var (
 	userOptions   = map[string]string{}
 )
 
-func init() {
+func handleArgv(argv []string) {
 	parser := commandparser.New()
 	helper := commandhelper.New()
 
@@ -74,7 +74,7 @@ Use %[default] to fill with default format, ex: downloads/%[default]`),
 		commandhelper.NewOption("stdout").Boolean().Description("Output download media to stdout"),
 	)...)
 
-	cmd, err := parser.Parse(os.Args)
+	cmd, err := parser.Parse(argv)
 	if err != nil {
 		log.Println(err)
 		os.Exit(1)
@@ -109,6 +109,8 @@ Use %[default] to fill with default format, ex: downloads/%[default]`),
 }
 
 func main() {
+	handleArgv(os.Args)
+
 	services := piko.GetAllServices()
 
 	// target = "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was"
