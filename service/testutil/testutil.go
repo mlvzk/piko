@@ -22,23 +22,31 @@ import (
 	"net/http/httptest"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
 func CacheHttpRequest(t *testing.T, base string, update bool) *httptest.Server {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		golden := filepath.Join("testdata", t.Name()+"-resp.golden")
+		golden := filepath.Join("testdata", strings.Replace(t.Name(), "/", "_", -1)+"-resp.golden")
 
 		if update {
-			resp, err := http.Get(base + r.URL.Path + "?" + r.URL.RawQuery)
+			req, err := http.NewRequest("GET", base+r.URL.Path+"?"+r.URL.RawQuery, nil)
 			if err != nil {
-				t.Fatalf("Error updating golden file: %v", err)
+				t.Fatalf("Error creating new request: %v", err)
+			}
+			req.Header = r.Header
+			req.Header.Del("accept-encoding")
+
+			resp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				t.Fatalf("Error sending http request: %v", err)
 			}
 			defer resp.Body.Close()
 
 			file, err := os.Create(golden)
 			if err != nil {
-				t.Fatalf("Error creating golden file")
+				t.Fatalf("Error creating golden file: %v", err)
 			}
 
 			io.Copy(file, resp.Body)

@@ -106,12 +106,12 @@ func (s Soundcloud) IsValidTarget(target string) bool {
 	return strings.Contains(target, "soundcloud.com/")
 }
 
-func (s Soundcloud) FetchItems(target string) service.ServiceIterator {
+func (s Soundcloud) FetchItems(target string) (service.ServiceIterator, error) {
 	return &SoundcloudIterator{
 		url:        target,
 		baseApiURL: "https://api.soundcloud.com",
 		clientID:   s.clientID,
-	}
+	}, nil
 }
 
 func (s Soundcloud) Download(meta, options map[string]string) (io.Reader, error) {

@@ -55,10 +55,10 @@ func (s Facebook) IsValidTarget(target string) bool {
 	return strings.Contains(target, "facebook.com/")
 }
 
-func (s Facebook) FetchItems(target string) service.ServiceIterator {
+func (s Facebook) FetchItems(target string) (service.ServiceIterator, error) {
 	return &FacebookIterator{
 		url: target,
-	}
+	}, nil
 }
 
 func (s Facebook) Download(meta, options map[string]string) (io.Reader, error) {

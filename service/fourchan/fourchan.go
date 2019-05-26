@@ -50,12 +50,12 @@ func (s Fourchan) IsValidTarget(target string) bool {
 	return strings.Contains(target, "4chan.org/") || strings.Contains(target, "4channel.org/")
 }
 
-func (s Fourchan) FetchItems(target string) service.ServiceIterator {
+func (s Fourchan) FetchItems(target string) (service.ServiceIterator, error) {
 	return &FourchanIterator{
 		url:  target,
 		page: 1,
 		end:  false,
-	}
+	}, nil
 }
 
 func (s Fourchan) Download(meta, options map[string]string) (io.Reader, error) {

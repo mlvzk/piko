@@ -93,10 +93,10 @@ func (s Instagram) IsValidTarget(target string) bool {
 	return strings.Contains(target, "instagram.com/")
 }
 
-func (s Instagram) FetchItems(target string) service.ServiceIterator {
+func (s Instagram) FetchItems(target string) (service.ServiceIterator, error) {
 	return &InstagramIterator{
 		url: target,
-	}
+	}, nil
 }
 
 func (s Instagram) Download(meta, options map[string]string) (io.Reader, error) {
@@ -146,12 +146,17 @@ func (i *InstagramIterator) Next() ([]service.Item, error) {
 		sch := schema{}
 		json.Unmarshal([]byte(schemaStr), &sch)
 
+		author := ""
+		if len(sch.Author.AlternateName) != 0 {
+			author = sch.Author.AlternateName[1:]
+		}
+
 		return []service.Item{
 			{
 				Meta: map[string]string{
 					"imgURL":  imgURL,
 					"caption": sch.Caption,
-					"author":  sch.Author.AlternateName[1:],
+					"author":  author,
 					"date":    sch.UploadDate,
 					"id":      id,
 					"ext":     "jpg",

@@ -36,8 +36,7 @@ import (
 
 type Youtube struct{}
 type YoutubeIterator struct {
-	url string
-	end bool
+	urls []string
 }
 
 func New() Youtube {
@@ -76,11 +75,21 @@ func (s Youtube) IsValidTarget(target string) bool {
 	return strings.Contains(target, "youtube.com/") || strings.Contains(target, "youtu.be/")
 }
 
-func (s Youtube) FetchItems(target string) service.ServiceIterator {
-	return &YoutubeIterator{
-		url: target,
-		end: false,
+func (s Youtube) FetchItems(target string) (service.ServiceIterator, error) {
+	if strings.Contains(target, "/playlist") {
+		urls, err := s.extractURLs(target)
+		if err != nil {
+			return nil, err
+		}
+
+		return &YoutubeIterator{
+			urls: urls,
+		}, nil
 	}
+
+	return &YoutubeIterator{
+		urls: []string{target},
+	}, nil
 }
 
 func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
@@ -221,18 +230,59 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 	return stdout, nil
 }
 
+var extractURLsRegex = regexp.MustCompile(`"url":"/watch\?v=([A-Za-z0-9_\-]{11})`)
+
+func (s Youtube) extractURLs(target string) ([]string, error) {
+	req, err := http.NewRequest("GET", target, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("user-agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	urls := map[string]struct{}{}
+	matches := extractURLsRegex.FindAllStringSubmatch(string(body), -1)
+	for _, m := range matches {
+		if len(m) < 2 {
+			continue
+		}
+
+		urls["https://www.youtube.com/watch?v="+m[1]] = struct{}{}
+	}
+
+	links := make([]string, 0, len(urls))
+	for u := range urls {
+		links = append(links, u)
+	}
+
+	return links, nil
+}
+
 var ytConfigRegexp = regexp.MustCompile(`ytplayer\.config = (.*?);ytplayer\.load = function()`)
 
 func (i *YoutubeIterator) Next() ([]service.Item, error) {
-	i.end = true
+	if len(i.urls) == 0 {
+		return nil, nil
+	}
 
-	resp, err := http.Get(i.url)
+	u := i.urls[0]
+	i.urls = i.urls[1:]
+
+	resp, err := http.Get(u)
 	if err != nil {
 		return nil, err
 	}
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("GET %v returned a wrong status code - %v", i.url, resp.StatusCode)
+		return nil, fmt.Errorf("GET %v returned a wrong status code - %v", u, resp.StatusCode)
 	}
 
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
@@ -244,7 +294,7 @@ func (i *YoutubeIterator) Next() ([]service.Item, error) {
 	// this only downloads the main video from the url
 	ytMatches := ytConfigRegexp.FindStringSubmatch(doc.Find("script").Text())
 	if len(ytMatches) < 2 {
-		return nil, errors.New("Couldn't match youtube's json config")
+		return nil, errors.New("Could not match youtube's json config for url: " + u)
 	}
 	ytConfigStr := ytMatches[1]
 	ytConfig := youtubeConfig{}
@@ -277,7 +327,7 @@ func (i *YoutubeIterator) Next() ([]service.Item, error) {
 }
 
 func (i YoutubeIterator) HasEnded() bool {
-	return i.end
+	return len(i.urls) == 0
 }
 
 func findBestVideoAudio(formats []ytdl.Format) ytdl.Format {

@@ -32,7 +32,7 @@ type ServiceIterator interface {
 
 type Service interface {
 	IsValidTarget(target string) bool
-	FetchItems(target string) ServiceIterator
+	FetchItems(target string) (ServiceIterator, error)
 	Download(meta, options map[string]string) (io.Reader, error)
 }
 

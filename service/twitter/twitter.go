@@ -75,10 +75,10 @@ func (s Twitter) IsValidTarget(target string) bool {
 	return strings.Contains(target, "twitter.com/")
 }
 
-func (s Twitter) FetchItems(target string) service.ServiceIterator {
+func (s Twitter) FetchItems(target string) (service.ServiceIterator, error) {
 	return &TwitterIterator{
 		url: target,
-	}
+	}, nil
 }
 
 func (s Twitter) Download(meta, options map[string]string) (io.Reader, error) {

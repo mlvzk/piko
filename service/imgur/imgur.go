@@ -50,12 +50,12 @@ func (s Imgur) IsValidTarget(target string) bool {
 	return strings.Contains(target, "imgur.com/")
 }
 
-func (s Imgur) FetchItems(target string) service.ServiceIterator {
+func (s Imgur) FetchItems(target string) (service.ServiceIterator, error) {
 	return &ImgurIterator{
 		url:  target,
 		page: 1,
 		end:  false,
-	}
+	}, nil
 }
 
 func (s Imgur) Download(meta, options map[string]string) (io.Reader, error) {

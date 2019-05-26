@@ -21,6 +21,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"path/filepath"
 	"reflect"
 	"strings"
 
@@ -109,6 +110,9 @@ Use %[default] to fill with default format, ex: downloads/%[default]`),
 }
 
 func main() {
+	// handleArgv can not be in init()
+	// because it would be called(and errored)
+	// if tests were run in main_test
 	handleArgv(os.Args)
 
 	services := piko.GetAllServices()
@@ -136,13 +140,17 @@ func main() {
 
 			foundAnyService = true
 			log.Printf("Found valid service: %s\n", reflect.TypeOf(s).Name())
-			iterator := s.FetchItems(target)
+			iterator, err := s.FetchItems(target)
+			if err != nil {
+				log.Printf("failed to fetch items: %v; target: %v\n", err, target)
+				break
+			}
 
 			for !iterator.HasEnded() {
 				items, err := iterator.Next()
 				if err != nil {
 					log.Printf("Iteration error: %v; target: %v\n", err, target)
-					break
+					continue
 				}
 
 				for _, item := range items {
@@ -191,6 +199,13 @@ func handleItem(s service.Service, item service.Item) {
 		defer bar.Finish()
 
 		reader = bar.NewProxyReader(reader)
+	}
+
+	dir := filepath.Dir(name)
+	err = os.MkdirAll(dir, os.ModePerm)
+	if err != nil {
+		log.Printf("Error creating directory: %v; dir: '%v'\n", err, dir)
+		return
 	}
 
 	file, err := os.Create(name)
