@@ -71,14 +71,11 @@ func TestIteratorNext(t *testing.T) {
 	expected := []service.Item{
 		{
 			Meta: map[string]string{
-				"imgURL": "ignore",
-				"caption": `Let’s set a world record together and get the most liked post on Instagram. Beating the current world record held by Kylie Jenner (18 million)! We got this 🙌
-
-#LikeTheEgg #EggSoldiers #EggGang`,
-				"author": "world_record_egg",
-				"date":   "2019-01-04T17:05:45",
-				"id":     "BsOGulcndj-",
-				"ext":    "jpg",
+				"imgURL":  "ignore",
+				"caption": "Let’s set a world record together and get the most liked post on Instagram. Beating the current world record held by Kylie Jenner (18…",
+				"author":  "world_record_egg",
+				"id":      "BsOGulcndj-",
+				"ext":     "jpg",
 			},
 			DefaultName: "%[title].%[ext]",
 		},

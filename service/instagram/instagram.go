@@ -17,7 +17,6 @@
 package instagram
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -137,27 +136,33 @@ func (i *InstagramIterator) Next() ([]service.Item, error) {
 		urlParts := strings.Split(i.url, "/p/")
 		id := urlParts[1][:len(urlParts[1])-1]
 
+		title := doc.Find(`title`).Text()
 		imgURL, imgExists := doc.Find(`meta[property="og:image"]`).Attr("content")
 		if !imgExists {
 			return nil, errors.New("Couldn't find the image url in meta tags")
 		}
 
-		schemaStr := doc.Find(`script[type="application/ld+json"]`).Text()
-		sch := schema{}
-		json.Unmarshal([]byte(schemaStr), &sch)
+		var author string
+		canonicalURL, hasCanonical := doc.Find(`link[rel="canonical"]`).Attr("href")
+		if hasCanonical {
+			canonicalParts := strings.Split(canonicalURL, "/")
+			if len(canonicalParts) > 3 {
+				author = canonicalParts[3]
+			}
+		}
 
-		author := ""
-		if len(sch.Author.AlternateName) != 0 {
-			author = sch.Author.AlternateName[1:]
+		var caption string
+		titleQuoteParts := strings.Split(title, "“")
+		if len(titleQuoteParts) != 0 {
+			caption = strings.Split(titleQuoteParts[len(titleQuoteParts)-1], "”")[0]
 		}
 
 		return []service.Item{
 			{
 				Meta: map[string]string{
 					"imgURL":  imgURL,
-					"caption": sch.Caption,
+					"caption": caption,
 					"author":  author,
-					"date":    sch.UploadDate,
 					"id":      id,
 					"ext":     "jpg",
 				},
