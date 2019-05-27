@@ -106,9 +106,15 @@ func (i *FacebookIterator) Next() ([]service.Item, error) {
 		return nil, err
 	}
 
-	title, _ := doc.Find(`meta[property="og:title"]`).Attr("content")
-	description, _ := doc.Find(`meta[property="og:description"]`).Attr("content")
+	title := doc.Find(`title`).Text()
+	description, _ := doc.Find(`meta[name="description"]`).Attr("content")
 	image, hasImage := doc.Find(`meta[property="og:image"]`).Attr("content")
+
+	var author string
+	titleParts := strings.Split(title, " - ")
+	if len(titleParts) > 0 {
+		author = titleParts[len(titleParts)-1]
+	}
 
 	var bestVideo, worstVideo string
 	matches := srcRegexp.FindAllSubmatch(bodyBytes, -1)
@@ -142,7 +148,7 @@ func (i *FacebookIterator) Next() ([]service.Item, error) {
 		items = append(items, service.Item{
 			Meta: map[string]string{
 				"id":          id,
-				"author":      title,
+				"author":      author,
 				"description": description,
 				"type":        "image",
 				"ext":         "jpg",
@@ -171,7 +177,7 @@ func (i *FacebookIterator) Next() ([]service.Item, error) {
 		items = append(items, service.Item{
 			Meta: map[string]string{
 				"id":          id,
-				"author":      title,
+				"author":      author,
 				"description": description,
 				"type":        "video",
 				"ext":         "mp4",
@@ -233,7 +239,7 @@ func (i *FacebookIterator) Next() ([]service.Item, error) {
 			items = append(items, service.Item{
 				Meta: map[string]string{
 					"id":          id,
-					"author":      title,
+					"author":      author,
 					"description": description,
 					"type":        "unknown",
 					"ext":         ext,
