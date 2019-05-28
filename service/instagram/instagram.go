@@ -166,7 +166,7 @@ func (i *InstagramIterator) Next() ([]service.Item, error) {
 					"id":      id,
 					"ext":     "jpg",
 				},
-				DefaultName: "%[title].%[ext]",
+				DefaultName: "%[author]_%[id].%[ext]",
 			},
 		}, nil
 	}

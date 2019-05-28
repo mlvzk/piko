@@ -117,14 +117,14 @@ func main() {
 
 	services := piko.GetAllServices()
 
-	// target = "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was"
-	// target = "https://imgur.com/t/article13/EfY6CxU"
-	// target = "https://www.youtube.com/watch?v=Gs069dndIYk"
-	// target = "https://www.youtube.com/watch?v=7IwYakbxmxo"
-	// target = "https://www.instagram.com/p/Bv9MJCsAvZV/"
-	// target = "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator"
-	// target = "https://twitter.com/deadprogram/status/1090554988768698368"
-	// target = "https://www.facebook.com/groups/veryblessedimages/permalink/478153699389793/"
+	// targets = append(targets, "https://boards.4channel.org/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was")
+	// targets = append(targets, "https://imgur.com/t/article13/EfY6CxU")
+	// targets = append(targets, "https://www.youtube.com/watch?v=Gs069dndIYk")
+	// targets = append(targets, "https://www.youtube.com/watch?v=7IwYakbxmxo")
+	// targets = append(targets, "https://www.instagram.com/p/Bv9MJCsAvZV/")
+	// targets = append(targets, "https://soundcloud.com/musicpromouser/mac-miller-ok-ft-tyler-the-creator")
+	// targets = append(targets, "https://twitter.com/deadprogram/status/1090554988768698368")
+	// targets = append(targets, "https://www.facebook.com/groups/veryblessedimages/permalink/478153699389793/")
 
 	for _, target := range targets {
 		if target == "" {
