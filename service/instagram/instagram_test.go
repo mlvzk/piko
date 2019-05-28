@@ -77,7 +77,7 @@ func TestIteratorNext(t *testing.T) {
 				"id":      "BsOGulcndj-",
 				"ext":     "jpg",
 			},
-			DefaultName: "%[title].%[ext]",
+			DefaultName: "%[author]_%[id].%[ext]",
 		},
 	}
 
