@@ -62,6 +62,7 @@ func TestIteratorNext(t *testing.T) {
 	}
 
 	for _, item := range items {
+		item.Meta["id"] = "ignore"
 		if !strings.Contains(item.Meta["downloadURL"], "fbcdn.net") {
 			t.Fatalf("Incorrect downloadURL: %s", item.Meta["downloadURL"])
 		}
@@ -71,7 +72,7 @@ func TestIteratorNext(t *testing.T) {
 	expected := []service.Item{
 		{
 			Meta: map[string]string{
-				"id":          "2750275577282508998",
+				"id":          "ignore",
 				"author":      "Shiba Inu Zero.Mika",
 				"description": "早晨啊🌼今早傻波在睡夢中又滾了下床😅之後起身扮作若無其事地再上床睡😂\n#柴犬 #shiba #zeromika #shibazeromika",
 				"ext":         "mp4",

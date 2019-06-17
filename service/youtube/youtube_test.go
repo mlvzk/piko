@@ -51,7 +51,7 @@ func TestIteratorNext(t *testing.T) {
 	defer ts.Close()
 
 	iterator := YoutubeIterator{
-		urls: []string{ts.URL + "/watch?v=HOK0uF-Z0xM"},
+		urls: []string{ts.URL + "/watch?v=Q8Tiz6INF7I"},
 	}
 
 	items, err := iterator.Next()
@@ -73,8 +73,8 @@ func TestIteratorNext(t *testing.T) {
 		{
 			Meta: map[string]string{
 				"_ytConfig": "ignore",
-				"author":    "Veltnox",
-				"title":     "2 hours of Bloomer Music",
+				"author":    "Andres Trevino",
+				"title":     "Hit the road Jack!",
 				"ext":       "mkv",
 			},
 			DefaultName: "%[title].%[ext]",
@@ -134,6 +134,7 @@ func TestExtractURLs(t *testing.T) {
 				"https://www.youtube.com/watch?v=3yg0-e5ZFqY",
 				"https://www.youtube.com/watch?v=4dBtfeoXM8I",
 				"https://www.youtube.com/watch?v=6GfkQOhXg_M",
+				"https://www.youtube.com/watch?v=75nKyI2FFFI",
 				"https://www.youtube.com/watch?v=7dgrMSTalZ0",
 				"https://www.youtube.com/watch?v=8Bv802FwvCY",
 				"https://www.youtube.com/watch?v=8yn3ViE6mhY",
@@ -192,7 +193,6 @@ func TestExtractURLs(t *testing.T) {
 				"https://www.youtube.com/watch?v=cGvZyrhObrg",
 				"https://www.youtube.com/watch?v=cfzAGk8SlfE",
 				"https://www.youtube.com/watch?v=dKnjm5SJ5jc",
-				"https://www.youtube.com/watch?v=dLGi_X2PqFw",
 				"https://www.youtube.com/watch?v=du8JSARa1H8",
 				"https://www.youtube.com/watch?v=ejQ7KxUeItY",
 				"https://www.youtube.com/watch?v=euBr4iyY_x8",

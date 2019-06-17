@@ -26,7 +26,7 @@
         
     
 
-            <meta name="description" content="Post with 40 votes and 1016 views. Tagged with starship troopers, article13; Shared by ItsJellyKid. Some advice for those of you in the EU" />
+            <meta name="description" content="Post with 40 votes and 1079 views. Tagged with starship troopers, article13; Shared by ItsJellyKid. Some advice for those of you in the EU" />
     
     <meta name="copyright" content="Copyright 2019 Imgur, Inc." />
     <meta http-equiv="X-UA-Compatible" content="IE=Edge;" />
@@ -37,10 +37,10 @@
     <link rel="apple-touch-icon-precomposed" href="//s.imgur.com/images/favicon-152.png">
     <meta name="msapplication-TileColor" content="#2cd63c">
     <meta name="msapplication-TileImage" content="//s.imgur.com/images/favicon-144.png">
-            <link rel="stylesheet" type="text/css" href="//s.imgur.com/min/global.css?1554752855" />
+            <link rel="stylesheet" type="text/css" href="//s.imgur.com/min/global.css?1560545809" />
 
     
-        <link rel="stylesheet" type="text/css" href="//s.imgur.com/min/gallery.css?1554752855" />
+        <link rel="stylesheet" type="text/css" href="//s.imgur.com/min/gallery.css?1560545809" />
 
 
             <link rel="alternate" type="application/json+oembed" href="https://api.imgur.com/oembed.json?url=https://imgur.com/t/article13/EfY6CxU" title="Some advice for those of you in the EU - Album on Imgur" />
@@ -59,13 +59,13 @@
     <meta property="fb:admins" content="12331492" />
     <meta property="fb:admins" content="12301369" />
     <meta property="fb:app_id" content="127621437303857" />
-    <meta property="al:android:url" content="imgur://imgur.com/t/article13/EfY6CxU?from=fbreferral" />
+    <meta property="al:android:url" content="imgur://imgur.com/t/article13/EfY6CxU??from=fbreferral" />
     <meta property="al:android:app_name" content="Imgur" />
     <meta property="al:android:package" content="com.imgur.mobile" />
-    <meta property="al:ios:url" content="imgur://imgur.com/t/article13/EfY6CxU?from=fbreferral" />
+    <meta property="al:ios:url" content="imgur://imgur.com/t/article13/EfY6CxU??from=fbreferral" />
     <meta property="al:ios:app_store_id" content="639881495" />
     <meta property="al:ios:app_name" content="Imgur" />
-    <meta property="al:web:url" content="https://imgur.com/t/article13/EfY6CxU" />
+    <meta property="al:web:url" content="https://imgur.com/t/article13/EfY6CxU?" />
     <meta name="twitter:site" content="@imgur" />
     <meta name="twitter:domain" content="imgur.com" />
     <meta name="twitter:app:id:googleplay" content="com.imgur.mobile" />
@@ -91,9 +91,11 @@
         <meta name="twitter:card"        content="summary_large_image"/>
     
 
-            <meta property="og:description" content="1016 views on Imgur"/>
-        <meta name="twitter:description" content="1016 views on Imgur"/>
+            <meta property="og:description" content="1079 views on Imgur"/>
+        <meta name="twitter:description" content="1079 views on Imgur"/>
     
+
+    <script type="text/javascript" src="//d1fh3f0kkan5vq.cloudfront.net/script.js"></script>
 
     
     <script type="application/ld+json">
@@ -119,22 +121,9 @@
     })(window,document,'script','dataLayer','GTM-M6N38SF');</script>
 <!-- End Google Tag Manager -->
 
-    <!--[if lte IE 8]><script type="text/javascript" src="//s.imgur.com/min/iepoly.js?1554752855"></script>
+    <!--[if lte IE 8]><script type="text/javascript" src="//s.imgur.com/min/iepoly.js?1560545809"></script>
 <![endif]-->
-          <script>
-      (function() {
-          document.write('<div id="vmv3-ad-manager" style="display:none"></div>');
-          document
-              .getElementById("vmv3-ad-manager")
-              .innerHTML = '<iframe id="vmv3-frm" src="javascript:\'<html><body></body></html>\'" width="0" height="0" data-mode="scan" data-site-id="5a12e09946e0fb00011074f3"></iframe>';
-          var loaderFrame = document.getElementById("vmv3-frm");
-          var loaderFrameWindow = loaderFrame.contentWindow ? loaderFrame.contentWindow  : loaderFrame.contentDocument;
-          loaderFrameWindow.document.open();
-          loaderFrameWindow.document.write('<scr'+'ipt src="//hb.vntsm.com/v3/live/ad-manager.min.js" type="text/javascript" async>'+'</scr'+'ipt>');
-          loaderFrameWindow.document.close();
-      })();
-  </script>
-
+    
 </head>
 <body class="">
     <!-- Google Tag Manager (noscript) -->
@@ -142,7 +131,7 @@
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <div id="drop-layer"></div>
-                        <div id="div-gpt-ad-uppermost-container"></div>
+                        <div id="div-ad-uppermost-container"></div>
 <div id="cta-container-placeholder"></div>
 <div id="topbar">
     <div class="header-center">
@@ -207,10 +196,10 @@
                 </li>
                 
                                     <li class="signin-link">
-                        <a class="topbar-icon signin-register " href="https://imgur.com/signin?invokedBy=regularSignIn">sign in</a>
+                        <a class="topbar-icon signin-register " href="https://imgur.com/signin?invokedBy=Regular%20Sign%20In">sign in</a>
                         <div id="FlipInfo-Container"></div>
                     </li>
-                    <li id="register"><a class="topbar-icon signin-register " href="https://imgur.com/register?invokedBy=regularSignIn">sign up</a></li>
+                    <li id="register"><a class="topbar-icon signin-register " href="https://imgur.com/register?invokedBy=Regular%20Sign%20In">sign up</a></li>
                 
             </ul>
         </div> <!-- #secondary-nav -->
@@ -257,7 +246,7 @@
                             </a>
                         
 
-                                                    <span class="date">8d</span>
+                                                    <span class="date">Mar 31</span>
                         
 
                                                     via
@@ -337,11 +326,11 @@
 
             
 
-                            <div class="advertisement " id="under-sidebar-parent">
-                    <div class="panel-ad"></div>
-                    <div class="panel-abp"></div>
-                </div>
-            
+            <div class="advertisement" id="under-sidebar-parent">
+                <div class="panel-ad"></div>
+                <div class="panel-abp"></div>
+                <div class="panel-bt"></div>
+            </div>
 
                             <div id="fixed-side-footer-links" class="side-footer-links">
     <div class="jobs-divider"><span id="jobs-sidefooter">Love Imgur? <a href="//imgur.com/jobs" class="title join-callout" data-jafo="{@@event@@:@@sideFooter@@,@@meta@@:{@@link@@:@@jobs@@}}">Join our team!</a></span></div>
@@ -387,7 +376,7 @@
 
     <div class="tag-group-selector-container"></div>
 
-    <input id="sid" type="hidden" value="536957090c18bf79b018233f6743e1f4" />
+    <input id="sid" type="hidden" value="b891f5693193610810d7263dceb3a9b8" />
 
     <div class="nodisplay">
 	<div id="colorbox-confirm" class="popup">
@@ -509,15 +498,15 @@ if(typeof jQuery === 'undefined') {
 
 
 
-                    <script type="text/javascript" src="//s.imgur.com/min/react15.js?1554752855"></script>
+                    <script type="text/javascript" src="//s.imgur.com/min/react15.js?1560545809"></script>
 
         
-        <script type="text/javascript" src="//s.imgur.com/min/global.js?1554752855"></script>
+        <script type="text/javascript" src="//s.imgur.com/min/global.js?1560545809"></script>
 
         <script type="text/javascript">
             Imgur.Environment = {
-                galleryScripts:             ["\/\/s.imgur.com\/min\/gallery.js?1554752855"],
-                galleryCSS:                 ["\/\/s.imgur.com\/min\/gallery.css?1554752855"],
+                galleryScripts:             ["\/\/s.imgur.com\/min\/gallery.js?1560545809"],
+                galleryCSS:                 ["\/\/s.imgur.com\/min\/gallery.css?1560545809"],
                 isDev:                      false,
                 isSubdomain:                Imgur.Util.isSubdomain('imgur.com'),
                 amplitudeKey:               'f1fc2abcb6d136bd4ef338e7fc0b9d05',
@@ -530,14 +519,14 @@ if(typeof jQuery === 'undefined') {
                 signed:                     false,
                 auth:                       {},
                 recaptcha_key:              '6LdZsh4TAAAAAGnDJx9KXxURWygq8exADiSHLP-M',
-                msid:                       '536957090c18bf79b018233f6743e1f4',
+                msid:                       'b891f5693193610810d7263dceb3a9b8',
                 beta:                       {
                     enabled: false,
                     inBeta:  false
                 },
                 
                 ctaConfig:                  {"gaming":[{"start_time":1,"end_time":2147483647,"type":"button","trackingName":"gaming","localStorageName":"cta-gaming","url":"\/\/imgur.com\/t\/gaming\/top\/week","buttonText":"Check it out!","title":"You are now browsing the Internet on God Mode.","description":"Awesome unlocked! Imgur has gaming content like you wouldn't believe.","backgroundImage":"{STATIC}\/images\/house-cta\/cta-twitch.jpg","newTab":false,"buttonColor":"#4d3280"}],"facebook":[{"start_time":1,"end_time":2147483647,"type":"custom","jsReactClassName":"Facebook","trackingName":"facebook","localStorageName":"cta-fb141008","title":"Like us on Facebook!","description":"We're bringing funny to your newsfeed. Like Imgur on Facebook!","backgroundImage":"{STATIC}\/images\/house-cta\/facebook-day.jpg"}],"twitter":[{"start_time":1,"end_time":2147483647,"type":"custom","jsReactClassName":"Twitter","url":"https:\/\/twitter.com\/imgur","trackingName":"twitter","localStorageName":"cta-tw141008","newTab":true,"title":"Follow us on Twitter!","description":""}],"pinterest":[{"start_time":1,"end_time":2147483647,"type":"custom","jsReactClassName":"Pinterest","trackingName":"pinterest","localStorageName":"cta-pinterest-2015-07-14","title":"Follow us on Pinterest!","backgroundImage":"{STATIC}\/images\/house-cta\/pinterest.png","customClass":"pinterest"}],"promoted":[{"start_time":1,"end_time":2147483647,"type":"custom","jsReactClassName":"Promoted","trackingName":"promoted","localStorageName":false,"buttonText":"Learn More","title":"What Are Promoted Posts?","description":"And why am I seeing them?","backgroundImage":"{STATIC}\/images\/house-cta\/cta-promoted.jpg","url":"\/\/imgur.com\/blog\/?p=6101","newTab":true,"customClass":"pp-banner"}],"global":[{"start_time":1,"end_time":1527490799,"trackingName":"cta-privacy-policy-2018-05-25","localStorageName":"cta-privacy-policy-2018-05-25","type":"button","url":"https:\/\/blog.imgur.com\/2018\/05\/21\/were-updating-our-privacy-policy\/","title":"We're Updating Our Privacy Policy","newTab":true,"buttonText":"Learn More","customClass":"privacy","backgroundImage":"none","backgroundColor":"#171544"},{"start_time":1544158801,"end_time":1544245199,"trackingName":"cta-post-ad-free-2018-12-07","localStorageName":"cta-post-ad-free-2018-12-07","type":"custom","url":"https:\/\/www.rockstargames.com\/reddeadredemption2\/","titleImg":"{STATIC}\/images\/house-cta\/ad-free\/text-v2.png","newTab":true,"buttonImg":"{STATIC}\/images\/house-cta\/ad-free\/button.png","customClass":"post-banner","backgroundImage":"{STATIC}\/images\/house-cta\/ad-free\/image.png","backgroundColor":"{STATIC}\/images\/house-cta\/ad-free\/bg.jpg","insidePageOK":true,"jsReactClassName":"Post","pageRegExp":"^\\\/((gallery|a|r\\\/subreddit|t\\\/([A-Za-z0-9])+)\\\/)?([A-Za-z0-9]{7}|[A-Za-z0-9]{5})$","promoted":true,"oncePerSession":true}],"global-lightbox":[{"start_time":1,"end_time":2147483647,"trackingName":"mobileApps","localStorageName":"apps1442873156","type":"custom","jsReactClassName":"GetTheApp","backgroundImage":"{STATIC}\/images\/space-med-bg.png?1433176979","newTab":true}]},
-                experiments:                {"expSNKPK127":{"active":false,"name":"Most Viral A\/B Threshold","inclusionProbability":0.4,"expirationDate":"2017-12-31T00:00:00.000Z","variations":[{"name":"mvtimedecaycontroversialtr","inclusionProbability":0.5},{"name":"mvtimedecaycontroversialct","inclusionProbability":0.5}]},"expREV270":{"active":true,"name":"expREV270","inclusionProbability":1,"expirationDate":"2019-04-01T00:00:00.000Z","variations":[{"name":"SCTUstaticimage","inclusionProbability":0},{"name":"SCTU_desktop_template","inclusionProbability":0},{"name":"SCTU_RM","inclusionProbability":0},{"name":"SCTU_static_key_art","inclusionProbability":0},{"name":"control","inclusionProbability":1}]},"expREV366":{"active":true,"name":"expREV366","inclusionProbability":0.02,"expirationDate":"2019-05-01T00:00:00.000Z","variations":[{"name":"treatment","inclusionProbability":0.5},{"name":"control","inclusionProbability":0.5}]},"expREV362":{"active":true,"name":"expREV362","inclusionProbability":0.1,"expirationDate":"2019-05-01T00:00:00.000Z","variations":[{"name":"fiveCentFloor","inclusionProbability":0.5},{"name":"control","inclusionProbability":0.5}]}},
+                experiments:                {"expSNKPK127":{"active":false,"name":"Most Viral A\/B Threshold","inclusionProbability":0.4,"expirationDate":"2017-12-31T00:00:00.000Z","variations":[{"name":"mvtimedecaycontroversialtr","inclusionProbability":0.5},{"name":"mvtimedecaycontroversialct","inclusionProbability":0.5}]},"expREV270":{"active":true,"name":"expREV270","inclusionProbability":1,"expirationDate":"2019-04-01T00:00:00.000Z","variations":[{"name":"SCTUstaticimage","inclusionProbability":0},{"name":"SCTU_desktop_template","inclusionProbability":0},{"name":"SCTU_RM","inclusionProbability":0},{"name":"SCTU_static_key_art","inclusionProbability":0},{"name":"control","inclusionProbability":1}]},"expREV366":{"active":true,"name":"expREV366","inclusionProbability":0.02,"expirationDate":"2019-05-01T00:00:00.000Z","variations":[{"name":"treatment","inclusionProbability":0.5},{"name":"control","inclusionProbability":0.5}]},"expCOM312":{"active":true,"name":"expCOM312","inclusionProbability":1,"expirationDate":"2019-07-01T00:00:00.000Z","variations":[{"name":"treatment","inclusionProbability":0.01},{"name":"control","inclusionProbability":0.99}]}},
                 isGalleryAdmin:             false,
                 isGalleryModerator:         false,
                 isGallerySupermoderator:    false,
@@ -595,31 +584,6 @@ if(typeof jQuery === 'undefined') {
 
     
 
-            <script type="text/javascript" src="//s.imgur.com/min/advertising.js?1554752855"></script>
-
-
-        <script>
-        !function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function()
-            {q("f",arguments)},setDisplayBids:function(){},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(
-            A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
-        apstag.init({pubID: '3079', adServer: 'googletag', bidTimeout: 2e3});
-        </script>
-
-        <script type="text/javascript" class="abp" src="//s.imgur.com/min/px.js?ch=1"></script>
-        <script type="text/javascript" class="abp" src="//s.imgur.com/min/px.js?ch=2"></script>
-
-        <script type="text/javascript">
-            window.runSlots = {
-                config: {"ads_website":"https:\/\/imgur.com\/advertise","allow_nsfw":false,"allow_unmoderated":false,"allow_subreddits_nsfw":false,"_enabled_":true,"disable_ads_start_time":1544158801,"disable_ads_end_time":1544245201,"active_slots":[{"name":"under_sidebar","element":"div-gpt-ad-under_sidebar","insertSelector":".panel-ad","insertMethod":"append","sizes":[[300,250],[300,600],[300,1050]],"slot_id":"\/4761660\/H_I_300x250","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151260"}}},"sovrn300x600":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"568812"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937264","network":"9432.1","sizeId":"170"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,250]}}},"ix300x600":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,600]}}}}},{"name":"top_banner","element":"div-gpt-ad-top_banner","insertSelector":"#inside .post-container","insertMethod":"before","isSCTU":true,"sizes":[[728,90],[1280,180]],"slot_id":"\/4761660\/Leaderboard_970x90_ATF","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151259"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937263","network":"9432.1","sizeId":"225"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"164899","size":[728,90]}}}}},{"name":"under_sidebar_3p","high_risk":true,"element":"div-gpt-ad-under_sidebar_3p","insertSelector":".panel-ad","insertMethod":"append","sizes":[[300,250],[300,600],[300,1050]],"slot_id":"\/4761660\/3P_MedRec_300x250_ATF","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151260"}}},"sovrn300x600":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"568812"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937264","network":"9432.1","sizeId":"170"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,250]}}},"ix300x600":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,600]}}}}},{"name":"top_banner_3p","high_risk":true,"element":"div-gpt-ad-top_banner_3p","insertSelector":"#inside .post-container","insertMethod":"before","isSCTU":true,"sizes":[[728,90],[1280,180]],"slot_id":"\/4761660\/3P_Leaderboard_728x90_ATF","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151259"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937263","network":"9432.1","sizeId":"225"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"164899","size":[728,90]}}}}},{"name":"top_med_rec","element":"div-gpt-ad-top_med_rec","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,250],[300,600]],"slot_id":"\/4761660\/MedRec_300x250_BTF_1","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554816"}}}}},{"name":"bottom_med_rec","element":"div-gpt-ad-bottom_med_rec","insertSelector":"#div-gpt-ad-top_med_rec","insertMethod":"after","sizes":[[300,250]],"slot_id":"\/4761660\/MedRec_300x250_BTF_2","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554817"}}}}},{"name":"top_med_rec_3p","high_risk":true,"element":"div-gpt-ad-top_med_rec_3p","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,250],[300,600]],"slot_id":"\/4761660\/3P_MedRec_300x250_BTF_1","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554816"}}}}},{"name":"bottom_med_rec_3p","high_risk":true,"element":"div-gpt-ad-bottom_med_rec_3p","insertSelector":"#div-gpt-ad-top_med_rec_3p","insertMethod":"after","sizes":[[300,250]],"slot_id":"\/4761660\/3P_MedRec_300x250_BTF_2","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554817"}}}}},{"name":"top_banner","abp":true,"element":"div-gpt-ad-top_banner","domElement":"iframe","blockthrough_id":"5c46002fd8-191","insertSelector":"#inside .post-container","insertMethod":"before","sizes":[[728,90]],"slot_id":"\/21707287250\/Desktop_728x90_ABP"},{"name":"under_sidebar","abp":true,"element":"div-gpt-ad-under_sidebar","domElement":"iframe","blockthrough_id":"5c4767812c-191","insertSelector":".panel-abp","insertMethod":"append","sizes":[[300,250]],"slot_id":"\/21707287250\/Desktop_300x250_ABP"},{"name":"pop_sky","abp":true,"element":"div-gpt-ad-sky_pop","domElement":"iframe","blockthrough_id":"5c47678b41-191","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,600],[160,600],[300,250]],"slot_id":"\/21707287250\/Desktop_160x600_ABP"},{"name":"top_banner_3p","abp":true,"high_risk":true,"element":"div-gpt-ad-top_banner_3p","domElement":"iframe","blockthrough_id":"5c46002fd8-191","insertSelector":"#inside .post-container","insertMethod":"before","sizes":[[728,90]],"slot_id":"\/21707287250\/3P_Desktop_728x90_ABP"},{"name":"under_sidebar_3p","abp":true,"high_risk":true,"element":"div-gpt-ad-under_sidebar_3p","domElement":"iframe","blockthrough_id":"5c4767812c-191","insertSelector":".panel-abp","insertMethod":"append","sizes":[[300,250]],"slot_id":"\/21707287250\/3P_Desktop_300x250_ABP"},{"name":"pop_sky_3p","abp":true,"high_risk":true,"element":"div-gpt-ad-sky_pop_3p","domElement":"iframe","blockthrough_id":"5c47678b41-191","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,600],[160,600],[300,250]],"slot_id":"\/21707287250\/3P_Desktop_160x600_ABP"}],"bidder_adjustments":{"aol":0.9,"ix":1,"sovrn":1,"rubicon":1},"partners":{"gpt":{"src":"\/\/www.googletagservices.com\/tag\/js\/gpt.js"}},"relations":[],"adblock_partners":{"blockthrough":{"src":"https:\/\/imgur-com.videoplayerhub.com\/videoloader.js"}},"environment_type":"","global_flags":{"page_load":true,"other":false,"user_page":false,"album_page":true},"gallery_flags":{"gallery":true,"subreddit":false,"subreddit_nsfw":false},"item_flags":{"album":true,"in_gallery":true,"not_in_gallery":false,"mature":false,"sixth_unmod":false,"sixth_mod_safe":true,"sixth_mod_unsafe":false,"onsfw_unmod":false,"onsfw_mod_safe":true,"onsfw_mod_unsafe":false,"nsfw":false,"promoted":false,"referer":true,"share":true,"spam":false,"under_10":false,"age_gate":false,"updated_date":false},"high_risk_flags":["subreddit","not_in_gallery","age_gate"],"defaultFlags":{"album":true,"in_gallery":true,"not_in_gallery":false,"mature":false,"sixth_unmod":false,"sixth_mod_safe":true,"sixth_mod_unsafe":false,"onsfw_unmod":false,"onsfw_mod_safe":true,"onsfw_mod_unsafe":false,"nsfw":false,"promoted":false,"referer":true,"share":true,"spam":false,"under_10":false,"age_gate":false,"updated_date":false,"gallery":true,"subreddit":false,"subreddit_nsfw":false,"page_load":true,"other":false,"user_page":false,"album_page":true}},
-                item: {"id":319396733,"hash":"EfY6CxU","account_id":"20527419","account_url":"ItsJellyKid","title":"Some advice for those of you in the EU","score":26,"starting_score":0,"virality":17190.849373,"size":0,"views":"1016","is_hot":false,"is_album":true,"album_cover":"o2nusiZ","album_cover_width":1079,"album_cover_height":603,"mimetype":null,"ext":".jpg","width":0,"height":0,"animated":false,"looping":false,"ups":33,"downs":7,"points":26,"reddit":null,"description":"","bandwidth":null,"timestamp":"2019-03-31 16:48:24","hot_datetime":null,"gallery_datetime":"2019-03-31 16:48:24","in_gallery":true,"section":"","tags":["0","0"],"subtype":"android","spam":"0","pending":"0","comment_count":5,"nsfw":false,"topic":"No Topic","topic_id":29,"meme_name":null,"meme_top":null,"meme_bottom":null,"prefer_video":false,"video_source":null,"video_host":null,"num_images":1,"platform":"android","readonly":false,"ad_type":0,"ad_url":"","weight":-1,"favorite_count":2,"album_privacy":"0","album_layout":"b","album_images":{"count":1,"images":[{"hash":"o2nusiZ","title":"","description":null,"has_sound":false,"width":1079,"height":603,"size":66267,"ext":".jpg","animated":false,"prefer_video":false,"looping":false,"datetime":"2019-03-31 16:46:30","edited":"0"}]},"galleryTags":[{"id":"178928597","hash":"EfY6CxU","account_id":"20527419","tag_id":"82321","display":"starship troopers","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"starship troopers","subscribers":"457","images":"309","background_hash":"7bemn9H","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":null,"animated":null,"thumbnail_animated":null,"metadata":{"tag_id":null,"title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":null,"accent":null},"image":{"animated":null},"thumbnail":{"animated":null}},{"id":"178928601","hash":"EfY6CxU","account_id":"20527419","tag_id":"5722295","display":"article13","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"article13","subscribers":"612","images":"403","background_hash":"IkZeAAy","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":"0","animated":null,"thumbnail_animated":null,"metadata":{"tag_id":"5722295","title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":"0","accent":null},"image":{"animated":null},"thumbnail":{"animated":null}}],"favorited":false,"adConfig":{"safeFlags":["album","in_gallery","onsfw_mod_safe","gallery","page_load"],"highRiskFlags":[],"unsafeFlags":[],"showsAds":true},"vote":null}
-            };
-
-            var PREBID_TIMEOUT = 1000;
-            var pbjs = pbjs || { };
-            pbjs.que = pbjs.que || [];
-        </script>
-    
-
         <script type="text/javascript">
     (function(widgetFactory) {
         widgetFactory.mergeConfig('gallery', {
@@ -642,7 +606,7 @@ if(typeof jQuery === 'undefined') {
             inGallery           : false,
             hashes              : null,
         
-            image               : {"id":319396733,"hash":"EfY6CxU","account_id":"20527419","account_url":"ItsJellyKid","title":"Some advice for those of you in the EU","score":26,"starting_score":0,"virality":17190.849373,"size":0,"views":"1016","is_hot":false,"is_album":true,"album_cover":"o2nusiZ","album_cover_width":1079,"album_cover_height":603,"mimetype":null,"ext":".jpg","width":0,"height":0,"animated":false,"looping":false,"ups":33,"downs":7,"points":26,"reddit":null,"description":"","bandwidth":null,"timestamp":"2019-03-31 16:48:24","hot_datetime":null,"gallery_datetime":"2019-03-31 16:48:24","in_gallery":true,"section":"","tags":["0","0"],"subtype":"android","spam":"0","pending":"0","comment_count":5,"nsfw":false,"topic":"No Topic","topic_id":29,"meme_name":null,"meme_top":null,"meme_bottom":null,"prefer_video":false,"video_source":null,"video_host":null,"num_images":1,"platform":"android","readonly":false,"ad_type":0,"ad_url":"","weight":-1,"favorite_count":2,"album_privacy":"0","album_layout":"b","album_images":{"count":1,"images":[{"hash":"o2nusiZ","title":"","description":null,"has_sound":false,"width":1079,"height":603,"size":66267,"ext":".jpg","animated":false,"prefer_video":false,"looping":false,"datetime":"2019-03-31 16:46:30","edited":"0"}]},"galleryTags":[{"id":"178928597","hash":"EfY6CxU","account_id":"20527419","tag_id":"82321","display":"starship troopers","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"starship troopers","subscribers":"457","images":"309","background_hash":"7bemn9H","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":null,"animated":null,"thumbnail_animated":null,"metadata":{"tag_id":null,"title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":null,"accent":null},"image":{"animated":null},"thumbnail":{"animated":null}},{"id":"178928601","hash":"EfY6CxU","account_id":"20527419","tag_id":"5722295","display":"article13","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"article13","subscribers":"612","images":"403","background_hash":"IkZeAAy","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":"0","animated":null,"thumbnail_animated":null,"metadata":{"tag_id":"5722295","title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":"0","accent":null},"image":{"animated":null},"thumbnail":{"animated":null}}],"favorited":false,"adConfig":{"safeFlags":["album","in_gallery","onsfw_mod_safe","gallery","page_load"],"highRiskFlags":[],"unsafeFlags":[],"showsAds":true},"vote":null},
+            image               : {"id":319396733,"hash":"EfY6CxU","account_id":"20527419","account_url":"ItsJellyKid","title":"Some advice for those of you in the EU","score":26,"starting_score":0,"virality":17190.849373,"size":0,"views":"1079","is_hot":false,"is_album":true,"album_cover":"o2nusiZ","album_cover_width":1079,"album_cover_height":603,"mimetype":null,"ext":".jpg","width":0,"height":0,"animated":false,"looping":false,"ups":33,"downs":7,"points":26,"reddit":null,"description":"","bandwidth":null,"timestamp":"2019-03-31 16:48:24","hot_datetime":null,"gallery_datetime":"2019-03-31 16:48:24","in_gallery":true,"section":"","tags":["0","0"],"subtype":"android","spam":"0","pending":"0","comment_count":5,"nsfw":false,"topic":"No Topic","topic_id":29,"meme_name":null,"meme_top":null,"meme_bottom":null,"prefer_video":false,"video_source":null,"video_host":null,"num_images":1,"platform":"android","readonly":false,"ad_type":0,"ad_url":"","weight":-1,"favorite_count":2,"album_privacy":"0","album_layout":"b","album_images":{"count":1,"images":[{"hash":"o2nusiZ","title":"","description":null,"has_sound":false,"width":1079,"height":603,"size":66267,"ext":".jpg","animated":false,"prefer_video":false,"looping":false,"datetime":"2019-03-31 16:46:30","edited":"0"}]},"galleryTags":[{"id":"178928597","hash":"EfY6CxU","account_id":"20527419","tag_id":"82321","display":"starship troopers","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"starship troopers","subscribers":"516","images":"67","background_hash":"7bemn9H","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":null,"animated":null,"thumbnail_animated":null,"metadata":{"tag_id":null,"title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":null,"accent":null},"image":{"animated":null},"thumbnail":{"animated":null}},{"id":"178928601","hash":"EfY6CxU","account_id":"20527419","tag_id":"5722295","display":"article13","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"article13","subscribers":"932","images":"0","background_hash":"IkZeAAy","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":"0","animated":null,"thumbnail_animated":null,"metadata":{"tag_id":"5722295","title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":"0","accent":null},"image":{"animated":null},"thumbnail":{"animated":null}}],"favorited":false,"adConfig":{"safeFlags":["album","in_gallery","onsfw_mod_safe","gallery","page_load"],"highRiskFlags":[],"unsafeFlags":[],"showsAds":true},"vote":null},
             group               : null,
                     comment_sort        : 'best',
             comment_id          : '',
@@ -693,10 +657,6 @@ if(typeof jQuery === 'undefined') {
         </script>
     
 
-            <script type="text/javascript" src="//s.imgur.com/min/runSlots.js?1554752855"></script>
-
-    
-
             <script>
             var ReactDOM = window.ReactDOM || window.React;
             ReactDOM.render(React.createElement(Imgur.Upload,
@@ -718,8 +678,36 @@ if(typeof jQuery === 'undefined') {
         </script>
     
 
+        <script type="text/javascript" src="//s.imgur.com/min/gallery.js?1560545809"></script>
+
+
+            <script type="text/javascript" src="//s.imgur.com/min/advertising.js?1560545809"></script>
+
+
+        <script>
+        !function(a9,a,p,s,t,A,g){if(a[a9])return;function q(c,r){a[a9]._Q.push([c,r])}a[a9]={init:function(){q("i",arguments)},fetchBids:function()
+            {q("f",arguments)},setDisplayBids:function(){},_Q:[]};A=p.createElement(s);A.async=!0;A.src=t;g=p.getElementsByTagName(s)[0];g.parentNode.insertBefore(
+            A,g)}("apstag",window,document,"script","//c.amazon-adsystem.com/aax2/apstag.js");
+        </script>
+
+        <script type="text/javascript" class="abp" src="//s.imgur.com/min/px.js?ch=1"></script>
+        <script type="text/javascript" class="abp" src="//s.imgur.com/min/px.js?ch=2"></script>
+
+        <script type="text/javascript">
+            window.runSlots = {
+                config: {"ads_website":"https:\/\/imgur.com\/advertise","allow_nsfw":false,"allow_unmoderated":false,"allow_subreddits_nsfw":false,"_enabled_":true,"disable_ads_start_time":1544158801,"disable_ads_end_time":1544245201,"active_slots":[{"name":"under_sidebar","element":"div-ad-under_sidebar","insertSelector":".panel-ad","insertMethod":"append","sizes":[[300,250],[300,600],[300,1050]],"slot_id":"\/4761660\/H_I_300x250","sasSlotId":76757,"blockthrough_id":"5c4767812c-191","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151260"}}},"sovrn300x600":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"568812"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937264","network":"9432.1","sizeId":"170"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,250]}}},"ix300x600":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,600]}}},"districtm":{"prod":true,"config":{"bidder":"districtm","params":{"placementId":"15871245"}}},"districtmDMX":{"prod":true,"config":{"bidder":"districtmDMX","params":{"dmxid":362886,"memberid":100682}}},"appnexus":{"prod":true,"config":{"bidder":"appnexus","params":{"placementId":"15871215","position":1}}},"pubmatic":{"prod":true,"config":{"bidder":"pubmatic","params":{"publisherId":"157970","adSlot":"imgur_desktop_300x250_ATF"}}},"openx":{"prod":true,"config":{"bidder":"openx","params":{"delDomain":"imgur-d.openx.net","unit":"540744720"}}}}},{"name":"top_banner","element":"div-ad-top_banner","insertSelector":"#inside .post-container","insertMethod":"before","isSCTU":true,"sizes":[[728,90],[1280,180]],"slot_id":"\/4761660\/Leaderboard_970x90_ATF","sasSlotId":76756,"blockthrough_id":"5c46002fd8-191","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151259"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937263","network":"9432.1","sizeId":"225"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"164899","size":[728,90]}}},"districtm":{"prod":true,"config":{"bidder":"districtm","params":{"placementId":"15871246"}}},"districtmDMX":{"prod":true,"config":{"bidder":"districtmDMX","params":{"dmxid":362887,"memberid":100682}}},"appnexus":{"prod":true,"config":{"bidder":"appnexus","params":{"placementId":"15871214","position":1}}},"pubmatic":{"prod":true,"config":{"bidder":"pubmatic","params":{"publisherId":"157970","adSlot":"imgur_desktop_728x90_ATF"}}},"openx":{"prod":true,"config":{"bidder":"openx","params":{"delDomain":"imgur-d.openx.net","unit":"540744719"}}}}},{"name":"under_sidebar_3p","high_risk":true,"element":"div-ad-under_sidebar_3p","insertSelector":".panel-ad","insertMethod":"append","sizes":[[300,250],[300,600],[300,1050]],"slot_id":"\/4761660\/3P_MedRec_300x250_ATF","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151260"}}},"sovrn300x600":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"568812"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937264","network":"9432.1","sizeId":"170"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,250]}}},"ix300x600":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172790","size":[300,600]}}}}},{"name":"top_banner_3p","high_risk":true,"element":"div-ad-top_banner_3p","insertSelector":"#inside .post-container","insertMethod":"before","isSCTU":true,"sizes":[[728,90],[1280,180]],"slot_id":"\/4761660\/3P_Leaderboard_728x90_ATF","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"151259"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937263","network":"9432.1","sizeId":"225"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"164899","size":[728,90]}}}}},{"name":"top_med_rec","element":"div-ad-top_med_rec","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,250],[300,600]],"slot_id":"\/4761660\/MedRec_300x250_BTF_1","sasSlotId":76758,"blockthrough_id":"5c47678b41-191","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554816"}}},"districtm":{"prod":true,"config":{"bidder":"districtm","params":{"placementId":"15871243"}}},"districtmDMX":{"prod":true,"config":{"bidder":"districtmDMX","params":{"dmxid":362885,"memberid":100682}}},"appnexus":{"prod":true,"config":{"bidder":"appnexus","params":{"placementId":"15871217","position":2}}},"pubmatic":{"prod":true,"config":{"bidder":"pubmatic","params":{"publisherId":"157970","adSlot":"imgur_desktop_300x250_BTF1"}}},"openx":{"prod":true,"config":{"bidder":"openx","params":{"delDomain":"imgur-d.openx.net","unit":"540744721"}}}}},{"name":"bottom_med_rec","element":"div-ad-bottom_med_rec","insertSelector":"#div-ad-top_med_rec","insertMethod":"after","sizes":[[300,250]],"slot_id":"\/4761660\/MedRec_300x250_BTF_2","sasSlotId":76751,"prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554817"}}},"districtm":{"prod":true,"config":{"bidder":"districtm","params":{"placementId":"15871243"}}},"districtmDMX":{"prod":true,"config":{"bidder":"districtmDMX","params":{"dmxid":362885,"memberid":100682}}},"appnexus":{"prod":true,"config":{"bidder":"appnexus","params":{"placementId":"15871217","position":2}}},"pubmatic":{"prod":true,"config":{"bidder":"pubmatic","params":{"publisherId":"157970","adSlot":"imgur_desktop_300x250_BTF2"}}},"openx":{"prod":true,"config":{"bidder":"openx","params":{"delDomain":"imgur-d.openx.net","unit":"540744722"}}}}},{"name":"top_med_rec_3p","high_risk":true,"element":"div-ad-top_med_rec_3p","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,250],[300,600]],"slot_id":"\/4761660\/3P_MedRec_300x250_BTF_1","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554816"}}}}},{"name":"bottom_med_rec_3p","high_risk":true,"element":"div-ad-bottom_med_rec_3p","insertSelector":"#div-ad-top_med_rec_3p","insertMethod":"after","sizes":[[300,250]],"slot_id":"\/4761660\/3P_MedRec_300x250_BTF_2","prebid":{"rubicon":{"prod":true,"config":{"bidder":"rubicon","params":{"accountId":"8526","zoneId":"1215826","siteId":"245836"}}},"aol":{"prod":true,"config":{"bidder":"aol","params":{"placement":"3937265","network":"9432.1","sizeId":"154"}}},"ix":{"prod":true,"config":{"bidder":"ix","params":{"siteId":"172792","size":[300,250]}}},"sovrn":{"prod":true,"config":{"bidder":"sovrn","params":{"tagid":"554817"}}}}},{"name":"top_banner","abp":true,"element":"div-ad-top_banner","domElement":"iframe","blockthrough_id":"5c46002fd8-191","insertSelector":"#inside .post-container","insertMethod":"before","sizes":[[728,90]],"slot_id":"\/21707287250\/Desktop_728x90_ABP"},{"name":"under_sidebar","abp":true,"element":"div-ad-under_sidebar","domElement":"iframe","blockthrough_id":"5c4767812c-191","insertSelector":".panel-abp","insertMethod":"append","sizes":[[300,250]],"slot_id":"\/21707287250\/Desktop_300x250_ABP"},{"name":"pop_sky","abp":true,"element":"div-ad-sky_pop","domElement":"iframe","blockthrough_id":"5c47678b41-191","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,600],[160,600],[300,250]],"slot_id":"\/21707287250\/Desktop_160x600_ABP"},{"name":"top_banner_3p","abp":true,"high_risk":true,"element":"div-ad-top_banner_3p","domElement":"iframe","blockthrough_id":"5c46002fd8-191","insertSelector":"#inside .post-container","insertMethod":"before","sizes":[[728,90]],"slot_id":"\/21707287250\/3P_Desktop_728x90_ABP"},{"name":"under_sidebar_3p","abp":true,"high_risk":true,"element":"div-ad-under_sidebar_3p","domElement":"iframe","blockthrough_id":"5c4767812c-191","insertSelector":".panel-abp","insertMethod":"append","sizes":[[300,250]],"slot_id":"\/21707287250\/3P_Desktop_300x250_ABP"},{"name":"pop_sky_3p","abp":true,"high_risk":true,"element":"div-ad-sky_pop_3p","domElement":"iframe","blockthrough_id":"5c47678b41-191","insertSelector":"#sidebar-bottom-ads","insertMethod":"append","sizes":[[300,600],[160,600],[300,250]],"slot_id":"\/21707287250\/3P_Desktop_160x600_ABP"}],"bidder_adjustments":{"aol":0.9,"ix":1,"sovrn":1,"rubicon":0.85,"districtm":0.9,"districtmDMX":1,"appnexus":1,"pubmatic":1,"openx":1},"partners":{"gpt":{"src":"\/\/www.googletagservices.com\/tag\/js\/gpt.js"}},"relations":[],"adblock_partners":{"blockthrough":{"src":"https:\/\/imgur-com.videoplayerhub.com\/videoloader.js"}},"environment_type":"","global_flags":{"page_load":true,"other":false,"user_page":false,"album_page":true},"gallery_flags":{"gallery":true,"subreddit":false,"subreddit_nsfw":false},"item_flags":{"album":true,"in_gallery":true,"not_in_gallery":false,"mature":false,"sixth_unmod":false,"sixth_mod_safe":true,"sixth_mod_unsafe":false,"onsfw_unmod":false,"onsfw_mod_safe":true,"onsfw_mod_unsafe":false,"nsfw":false,"promoted":false,"referer":true,"share":true,"spam":false,"under_10":false,"age_gate":false,"updated_date":false},"high_risk_flags":["subreddit","not_in_gallery","age_gate"],"defaultFlags":{"album":true,"in_gallery":true,"not_in_gallery":false,"mature":false,"sixth_unmod":false,"sixth_mod_safe":true,"sixth_mod_unsafe":false,"onsfw_unmod":false,"onsfw_mod_safe":true,"onsfw_mod_unsafe":false,"nsfw":false,"promoted":false,"referer":true,"share":true,"spam":false,"under_10":false,"age_gate":false,"updated_date":false,"gallery":true,"subreddit":false,"subreddit_nsfw":false,"page_load":true,"other":false,"user_page":false,"album_page":true}},
+                item: {"id":319396733,"hash":"EfY6CxU","account_id":"20527419","account_url":"ItsJellyKid","title":"Some advice for those of you in the EU","score":26,"starting_score":0,"virality":17190.849373,"size":0,"views":"1079","is_hot":false,"is_album":true,"album_cover":"o2nusiZ","album_cover_width":1079,"album_cover_height":603,"mimetype":null,"ext":".jpg","width":0,"height":0,"animated":false,"looping":false,"ups":33,"downs":7,"points":26,"reddit":null,"description":"","bandwidth":null,"timestamp":"2019-03-31 16:48:24","hot_datetime":null,"gallery_datetime":"2019-03-31 16:48:24","in_gallery":true,"section":"","tags":["0","0"],"subtype":"android","spam":"0","pending":"0","comment_count":5,"nsfw":false,"topic":"No Topic","topic_id":29,"meme_name":null,"meme_top":null,"meme_bottom":null,"prefer_video":false,"video_source":null,"video_host":null,"num_images":1,"platform":"android","readonly":false,"ad_type":0,"ad_url":"","weight":-1,"favorite_count":2,"album_privacy":"0","album_layout":"b","album_images":{"count":1,"images":[{"hash":"o2nusiZ","title":"","description":null,"has_sound":false,"width":1079,"height":603,"size":66267,"ext":".jpg","animated":false,"prefer_video":false,"looping":false,"datetime":"2019-03-31 16:46:30","edited":"0"}]},"galleryTags":[{"id":"178928597","hash":"EfY6CxU","account_id":"20527419","tag_id":"82321","display":"starship troopers","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"starship troopers","subscribers":"516","images":"67","background_hash":"7bemn9H","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":null,"animated":null,"thumbnail_animated":null,"metadata":{"tag_id":null,"title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":null,"accent":null},"image":{"animated":null},"thumbnail":{"animated":null}},{"id":"178928601","hash":"EfY6CxU","account_id":"20527419","tag_id":"5722295","display":"article13","ups":"0","downs":"0","score":"0","timestamp":"2019-03-31 16:48:25","blocked":"0","tag":"article13","subscribers":"932","images":"0","background_hash":"IkZeAAy","thumbnail_hash":null,"spam":"0","nsfw":"0","is_promoted":"0","animated":null,"thumbnail_animated":null,"metadata":{"tag_id":"5722295","title":null,"description":null,"logo_hash":null,"logo_destination_url":null,"is_promoted":"0","accent":null},"image":{"animated":null},"thumbnail":{"animated":null}}],"favorited":false,"adConfig":{"safeFlags":["album","in_gallery","onsfw_mod_safe","gallery","page_load"],"highRiskFlags":[],"unsafeFlags":[],"showsAds":true},"vote":null}
+            };
+
+            var PREBID_TIMEOUT = 1000;
+            var pbjs = pbjs || { };
+            pbjs.que = pbjs.que || [];
+
+            
+                apstag.init({pubID: '3917', adServer: 'sas', bidTimeout: 2e3});
+            
+        </script>
     
-    <script type="text/javascript" src="//s.imgur.com/min/gallery.js?1554752855"></script>
 
     <script type="text/javascript">
     (function(widgetFactory) {

@@ -50,7 +50,7 @@ func TestIteratorNext(t *testing.T) {
 	defer ts.Close()
 
 	iterator := FourchanIterator{
-		url: ts.URL + "/adv/thread/20765545/i-want-to-be-the-very-best-like-no-one-ever-was",
+		url: ts.URL + "/vip/thread/88504",
 	}
 
 	items, err := iterator.Next()
@@ -61,11 +61,11 @@ func TestIteratorNext(t *testing.T) {
 	expected := []service.Item{
 		{
 			Meta: map[string]string{
-				"title":        "1306532808724.png",
-				"imgURL":       "https://i.4cdn.org/adv/1554743536847.png",
-				"id":           "1554743536847",
+				"title":        "F.png",
+				"imgURL":       "https://is2.4chan.org/vip/1546227263937.png",
+				"id":           "1546227263937",
 				"ext":          "png",
-				"thumbnailURL": "https://i.4cdn.org/adv/1554743536847s.jpg",
+				"thumbnailURL": "https://i.4cdn.org/vip/1546227263937s.jpg",
 			},
 			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{
@@ -77,11 +77,27 @@ func TestIteratorNext(t *testing.T) {
 		},
 		{
 			Meta: map[string]string{
-				"title":        "1306532948201.png",
-				"imgURL":       "https://i.4cdn.org/adv/1554745883162.png",
-				"id":           "1554745883162",
+				"title":        "1545804746249.jpg",
+				"imgURL":       "https://is2.4chan.org/vip/1546318308248.jpg",
+				"id":           "1546318308248",
+				"ext":          "jpg",
+				"thumbnailURL": "https://i.4cdn.org/vip/1546318308248s.jpg",
+			},
+			DefaultName: "%[title]",
+			AvailableOptions: map[string][]string{
+				"thumbnail": {"yes", "no"},
+			},
+			DefaultOptions: map[string]string{
+				"thumbnail": "no",
+			},
+		},
+		{
+			Meta: map[string]string{
+				"title":        "tegaki.png",
+				"imgURL":       "https://is2.4chan.org/vip/1549849384199.png",
+				"id":           "1549849384199",
 				"ext":          "png",
-				"thumbnailURL": "https://i.4cdn.org/adv/1554745883162s.jpg",
+				"thumbnailURL": "https://i.4cdn.org/vip/1549849384199s.jpg",
 			},
 			DefaultName: "%[title]",
 			AvailableOptions: map[string][]string{

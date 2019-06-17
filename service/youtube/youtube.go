@@ -294,7 +294,7 @@ func (i *YoutubeIterator) Next() ([]service.Item, error) {
 	// this only downloads the main video from the url
 	ytMatches := ytConfigRegexp.FindStringSubmatch(doc.Find("script").Text())
 	if len(ytMatches) < 2 {
-		return nil, errors.New("Could not match youtube's json config for url: " + u)
+		return nil, errors.New("Could not match youtube's json config for url: " + u + " ; The video is probably not available")
 	}
 	ytConfigStr := ytMatches[1]
 	ytConfig := youtubeConfig{}
