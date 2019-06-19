@@ -1,7 +1,7 @@
 # piko
 
 Light and simple media downloader with support for:
-- Youtube
+- Youtube - single /watch?v= videos and playlists(only 100 first videos)
 - Soundcloud
 - Imgur
 - Facebook
