@@ -48,7 +48,11 @@ func GetDownloadURL(formatMeta map[string]interface{}, htmlPlayerFile string) (*
 	query := u.Query()
 	query.Set("ratebypass", "yes")
 	if len(sig) > 0 {
-		query.Set("signature", sig)
+		param := "signature"
+		if v, ok := formatMeta["sp"].(string); ok && v != "" {
+			param = v
+		}
+		query.Set(param, sig)
 	}
 	u.RawQuery = query.Encode()
 	return u, nil
