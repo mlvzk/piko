@@ -2,12 +2,21 @@
 
 Light and simple media downloader with support for:
 - Youtube - single /watch?v= videos and playlists(only 100 first videos)
-- Soundcloud
-- Imgur
-- Facebook
-- Twitter
-- Instagram
-- 4chan
+- Soundcloud - single songs
+- Imgur - albums
+- Facebook - single and multiple images/videos in one post
+- Twitter - \*/status/\* links, single and multiple images/videos of single posts
+- Instagram - single and multiple images of single posts
+- 4chan - all images and videos of a thread and it's posts
+
+TODO:
+- Twitch - recording livestreams and watching with `-stdout | mpv -`
+- Youtube - support more than 100 videos in playlists(might need API key which has quota limit)
+- Soundcloud - support playlists
+- Facebook - support downloading all images/videos posted by a page
+- Twitter - support downloading all images/videos posted by an account
+- Instagram - support downloading videos and downloading all images/videos of an account
+- 4chan - support downloading all images of alive threads in a board
 
 # Installation
 
