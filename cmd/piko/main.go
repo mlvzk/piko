@@ -46,7 +46,6 @@ func handleArgv(argv []string) {
 
 	helper.SetName("piko")
 	helper.SetVersion("alpha")
-	helper.AddAuthor("mlvzk")
 
 	helper.AddUsage(
 		"piko [urls...]",
