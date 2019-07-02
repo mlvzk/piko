@@ -148,16 +148,17 @@ func (s Youtube) Download(meta, options map[string]string) (io.Reader, error) {
 		videoFormat      ytdl.Format
 		videoFormatFound bool
 	)
-	if quality == "best" {
+	switch quality {
+	case "worst", "low":
+		videoFormat, videoFormatFound = findWorstVideo(formats)
+	case "best", "high":
 		videoFormat, videoFormatFound = findBestVideo(formats)
-	} else if quality == "medium" {
+	default:
 		videoFormat, videoFormatFound = findMediumVideo(formats)
 		if !videoFormatFound {
 			// fallback to best if medium not found
 			videoFormat, videoFormatFound = findBestVideo(formats)
 		}
-	} else {
-		videoFormat, videoFormatFound = findWorstVideo(formats)
 	}
 
 	if !audioFormatFound || !videoFormatFound {
