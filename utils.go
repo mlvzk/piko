@@ -20,8 +20,8 @@ import (
 	"github.com/mlvzk/piko/service"
 	"github.com/mlvzk/piko/service/facebook"
 	"github.com/mlvzk/piko/service/fourchan"
-	"github.com/mlvzk/piko/service/imgur"
 	"github.com/mlvzk/piko/service/instagram"
+	"github.com/mlvzk/piko/service/script"
 	"github.com/mlvzk/piko/service/soundcloud"
 	"github.com/mlvzk/piko/service/twitter"
 	"github.com/mlvzk/piko/service/youtube"
@@ -30,11 +30,41 @@ import (
 func GetAllServices() []service.Service {
 	return []service.Service{
 		youtube.New(),
-		imgur.New(),
+		// imgur.New(),
 		instagram.New(),
 		fourchan.New(),
 		soundcloud.New("a3e059563d7fd3372b49b37f00a00bcf"),
 		twitter.New("AAAAAAAAAAAAAAAAAAAAAIK1zgAAAAAA2tUWuhGZ2JceoId5GwYWU5GspY4%3DUq7gzFoCZs1QfwGoVdvSac3IniczZEYXIcDyumCauIXpcAPorE"),
 		facebook.New(),
+		script.New("imgur", `
+def isValidTarget(target):
+	return target.find("imgur.com") != -1
+
+def download(item):
+	url = "https://i.imgur.com/%(id)s.%(ext)s" % item["Meta"]
+	return url
+
+def fetchItems(url):
+	doc = fetch(url)
+
+	albumTitle = doc.find("div.post-title-container h1").text
+	
+	images = doc.find("div.post-images div.post-image-container")
+	items = []
+	for image in images:
+		itemType = image.attr("itemtype")
+		items.append({
+			"Meta": {
+				"id": image.attr("id"),
+				"ext": "mp4" if itemType.endswith("VideoObject") else "png",
+				"itemType": itemType,
+				"albumTitle": albumTitle,
+			},
+			"DefaultName": "%[id].%[ext]",
+		})
+
+	return items
+
+		`),
 	}
 }

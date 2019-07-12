@@ -10,6 +10,7 @@ require (
 	github.com/mattn/go-isatty v0.0.8 // indirect
 	github.com/mattn/go-runewidth v0.0.4 // indirect
 	github.com/mlvzk/qtils v0.4.1
+	go.starlark.net v0.0.0-20190702223751-32f345186213
 	golang.org/x/crypto v0.0.0-20190513172903-22d7a77e9e5f // indirect
 	golang.org/x/net v0.0.0-20190522135303-fa69b94a3b58 // indirect
 	golang.org/x/sys v0.0.0-20190522044717-8097e1b27ff5 // indirect
