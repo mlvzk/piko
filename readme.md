@@ -88,3 +88,8 @@ piko 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' --stdout | mpv -
 # download only audio, with best quality, output to stdout, pipe to mpv which reads from stdin
 piko --option onlyAudio=yes --option quality=best 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' --stdout | mpv -
 ```
+
+# Contributors
+
+- [mlvzk](https://github.com/mlvzk) - creator and maintainer
+- [gwu](https://github.com/gwimm) - the idea came from gwu's [shovel](http://gitlab.com/gwu/shovel) project
